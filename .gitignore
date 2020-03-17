@@ -1,0 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+lib
+.idea
+*.iml
+# git에 자동으로 배포하지 않을 파일들을 선택합니다.
