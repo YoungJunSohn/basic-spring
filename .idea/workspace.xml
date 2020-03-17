@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d9f375ad-b378-4061-84f4-24bdf580d16a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/springPjt_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Spring_MVC_5_2_3_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/aopalliance-1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/commons-logging-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-aop-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-aspects-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-beans-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-context-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-context-support-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-core-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-expression-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-instrument-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-jdbc-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-jms-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-messaging-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-orm-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-oxm-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-test-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-tx-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-web-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/spring-webmvc-5.2.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/springPjt.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/applicationContext.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/index.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="spring-beans.schema" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ZGHOmWU03HCtAku8GA6vqqPi12" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d9f375ad-b378-4061-84f4-24bdf580d16a" name="Default Changelist" comment="" />
+      <created>1584458480568</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584458480568</updated>
+      <workItem from="1584458483044" duration="322000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="502" y="141" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1584458524563">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="502" y="141" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584458524563" />
+  </component>
+</project>
