@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("file:web/WEB-INF/applicationContext.xml")
 public class SampleTests {
 
-    @Setter(onMethod_ = { @Autowired }) //자동 빈 묶기를 합니다.(lombok)
+    @Setter(onMethod_ = { @Autowired })
     private Restaurant restaurant;
 
     @Test
