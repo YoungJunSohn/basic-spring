@@ -20,8 +20,8 @@ public class JDBCTests {
     @Test
     public void testConnection() {
         try(Connection con = DriverManager.getConnection(
-                "jdbc:oracle:thin:@localhost:1521.XE",
-                "TEST",
+                "jdbc:oracle:thin:@localhost:1521:xe",
+                "test",
                 "1111")
         ){
             log.info(con);
