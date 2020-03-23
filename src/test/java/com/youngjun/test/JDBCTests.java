@@ -11,7 +11,12 @@ import static org.junit.Assert.fail;
 public class JDBCTests {
         static {
             try {
-                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Class.forName("oracle.jdbc.OracleDriver");
+                /*
+                ojdbc 9 버전 이후(현재버전 11g)에는
+                oracle.jdbc.driver.OracleDriver 에서
+                oracle.jdbc.OracleDriver 로 변경되었습니다. 주의 << applicationContext 에서도 변경할 것!!
+                */
             }catch (Exception exp){
                 exp.printStackTrace();
             }//try~catch
@@ -21,7 +26,7 @@ public class JDBCTests {
     public void testConnection() {
         try(Connection con = DriverManager.getConnection(
                 "jdbc:oracle:thin:@localhost:1521:xe",
-                "test",
+                "awesomeboard",
                 "1111")
         ){
             log.info(con);
