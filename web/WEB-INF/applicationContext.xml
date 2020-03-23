@@ -2,22 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+<!--   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">-->
 
-    <!-- Spring bean 등록을 위한 설정 -->
-    <context:component-scan base-package="com.youngjun.controller"></context:component-scan>
-<!--***************************************************************************************************-->
+
+    <!--***************************************************************************************************-->
     <!-- Hikari CP root-context -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
         <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-        <property name="username" value="awesomeboard"></property>
-        <property name="password" value="1111"></property>
+        <property name="username" value="awesomeboard"/>
+        <property name="password" value="1111"/>
     </bean>
     <!-- Hikari CP 세부설정은 이곳에서~ -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig"/>
     </bean>
-<!--***************************************************************************************************-->
+    <!--***************************************************************************************************-->
+    <!-- Mybatis 설정 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
+    <context:component-scan base-package="com.youngjun.sample"/>
+    <!-- Spring bean 등록을 위한 설정 -->
+    <mybatis-spring:scan base-package="com.youngjun.mapper"/>
 </beans>
+

@@ -1,5 +1,4 @@
 package com.youngjun.sample;
-import com.youngjun.controller.Restaurant;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;

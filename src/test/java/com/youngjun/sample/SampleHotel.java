@@ -1,6 +1,5 @@
 package com.youngjun.sample;
 
-import com.youngjun.controller.Chef;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;

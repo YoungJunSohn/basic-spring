@@ -1,4 +1,4 @@
-package com.youngjun.controller;
+package com.youngjun.sample;
 
 import lombok.Data;
 import lombok.Setter;
