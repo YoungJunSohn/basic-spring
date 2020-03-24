@@ -32,8 +32,9 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <context:component-scan base-package="com.youngjun.sample"/>
     <!-- Spring bean 등록을 위한 설정 -->
     <mybatis-spring:scan base-package="com.youngjun.mapper"/>
+    <context:component-scan base-package="com.youngjun.sample"/>
+    <context:component-scan base-package="com.youngjun.controller"/>
 </beans>
 

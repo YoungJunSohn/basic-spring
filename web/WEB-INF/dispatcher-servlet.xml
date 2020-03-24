@@ -8,5 +8,4 @@
         <property name="prefix" value="web/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
 </beans>
