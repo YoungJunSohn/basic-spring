@@ -7,6 +7,8 @@
     <groupId>com.youngjun.spring-basic</groupId>
     <artifactId>springPjt</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <!-- 의존 관계 중복을 피하기 위한 변수 설정 -->
     <properties>
         <spring.framework.version>5.2.4.RELEASE</spring.framework.version>
         <java.version>1.8</java.version>
@@ -14,6 +16,8 @@
 
     <build>
         <plugins>
+            <!-- 메이븐의 컴파일 옵션을 변경합니다
+            -> 낮은 버전인 경우에 정상적인 컴파일이 일어나지 않는 경우가 발생합니다 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -119,6 +123,7 @@ slf4j library 내부에 Logger 클래스가 존재하므로 필요하다!
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+        <!-- HikariCP > BoneCP에 비하여 뛰어난 처리속도를 가진 Connection pool입니다. -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -153,6 +158,14 @@ slf4j library 내부에 Logger 클래스가 존재하므로 필요하다!
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
             <version>1.16</version>
+        </dependency>
+
+        <!-- JSP api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
 
