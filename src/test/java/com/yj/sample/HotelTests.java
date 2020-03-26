@@ -1,4 +1,4 @@
-package com.youngjun.sample;
+package com.yj.sample;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;

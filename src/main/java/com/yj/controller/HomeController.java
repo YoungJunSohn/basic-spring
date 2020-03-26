@@ -1,4 +1,4 @@
-package com.youngjun.controller;
+package com.yj.controller;
 
 public class HomeController {
 }

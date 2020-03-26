@@ -1,4 +1,4 @@
-package com.youngjun.mapper;
+package com.yj.mapper;
 
 import org.apache.ibatis.annotations.Select;
 

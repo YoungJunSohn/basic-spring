@@ -7,7 +7,7 @@
     </Appenders>
     <Loggers>
         <!-- Logger의 name 은 패키지명, level은 표시하고 싶은 log level을 작성합니다. -->
-        <Logger name="com.youngjun" level="info" additivity="false">
+        <Logger name="com.yj" level="info" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
         <Root level="warn">

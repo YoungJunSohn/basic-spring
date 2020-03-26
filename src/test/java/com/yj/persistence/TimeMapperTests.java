@@ -1,6 +1,6 @@
-package com.youngjun.persistence;
+package com.yj.persistence;
 
-import com.youngjun.mapper.TimeMapper;
+import com.yj.mapper.TimeMapper;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;

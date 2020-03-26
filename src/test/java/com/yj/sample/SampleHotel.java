@@ -1,4 +1,4 @@
-package com.youngjun.sample;
+package com.yj.sample;
 
 import lombok.Getter;
 import lombok.ToString;
