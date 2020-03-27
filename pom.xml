@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.youngjun.spring-basic</groupId>
@@ -11,7 +12,6 @@
     <!-- 의존 관계 중복을 피하기 위한 변수 설정 -->
     <properties>
         <spring.framework.version>5.2.4.RELEASE</spring.framework.version>
-        <java.version>1.8</java.version>
     </properties>
 
     <build>
@@ -22,25 +22,26 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
 
         </plugins>
     </build>
 
-
-
+ㅇ
     <dependencies>
-        <!-- maven-war-pligin 설정 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>3.2.3</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.2.4.RELEASE</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -53,16 +54,14 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.framework.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-tx</artifactId>
             <version>${spring.framework.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
+            <artifactId>spring-jdbc</artifactId>
             <version>${spring.framework.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
@@ -72,6 +71,8 @@
             <version>${spring.framework.version}</version>
             <scope>test</scope>
         </dependency>
+
+
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
@@ -88,16 +89,16 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>2.11.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>2.11.2</version>
-            </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
 
         <!-- slf4j java logging api -->
         <dependency>
@@ -110,11 +111,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.6.4</version>
         </dependency>
-<!--
-slf4j library를 사용하는 이유?
-java에서 log4j를 이용한 로그를 출력하기 위해서는 Logger 클래스가 필요한데,
-slf4j library 내부에 Logger 클래스가 존재하므로 필요하다!
--->
+        <!--
+        slf4j library를 사용하는 이유?
+        java에서 log4j를 이용한 로그를 출력하기 위해서는 Logger 클래스가 필요한데,
+        slf4j library 내부에 Logger 클래스가 존재하므로 필요하다!
+        -->
         <!-- https://mvnrepository.com/artifact/com.oracle.ojdbc/ojdbc8 -->
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
@@ -142,16 +143,7 @@ slf4j library 내부에 Logger 클래스가 존재하므로 필요하다!
             <artifactId>mybatis-spring</artifactId>
             <version>2.0.4</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${spring.framework.version}</version>
-        </dependency>
+
 
         <!-- JDBC의 preparedStatement를 이용하여 처리된 SQL 로그를 확인하기 위한 라이브러리 -->
         <dependency>

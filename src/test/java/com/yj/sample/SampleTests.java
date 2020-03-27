@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 //@ExtendWith(SpringExtension.class)//Junit4에서 @RunWith(SpringJunit4ClassRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Log4j2
-@ContextConfiguration("file:web/WEB-INF/applicationContext.xml")
+@ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
 public class SampleTests {
 
     @Setter(onMethod_ = { @Autowired })

@@ -11,9 +11,8 @@
        http://mybatis.org/schema/mybatis-spring.xsd">
 <!--   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">-->
 
-
     <!--***************************************************************************************************-->
-    <!-- Hikari CP root-context -->
+    <!-- Hikari CP 빈 등록 -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 <!--        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>-->
         <!-- JDBC 관련 로그 출력을 위한 수정(20.03.24) -->
@@ -22,7 +21,7 @@
         <property name="username" value="awesomeboard"/>
         <property name="password" value="1111"/>
     </bean>
-    <!-- Hikari CP 세부설정은 이곳에서~ -->
+    <!-- dataSource 등록 -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig"/>
     </bean>

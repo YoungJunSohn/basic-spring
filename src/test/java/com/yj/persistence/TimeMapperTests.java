@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:web/WEB-INF/applicationContext.xml")
+@ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
 @Log4j2
 public class TimeMapperTests {
     @Setter(onMethod_ = @Autowired)
