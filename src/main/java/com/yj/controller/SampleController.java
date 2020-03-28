@@ -1,12 +1,16 @@
 package com.yj.controller;
 
 import com.yj.domain.SampleDTO;
+import com.yj.domain.SampleDTOList;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /*@Controller 와 @RequestMapping 을 식별하여 HandlerMapping 이 생성됩니다. >> MappingRegistry 에 보관*/
 @Controller
@@ -45,9 +49,34 @@ public class SampleController {
         log.info("name: "+name);
         log.info("age: "+age);
         return "ex02";
-    }//ex02()
+    }//ex02(String name, int age)
 
+
+    @GetMapping("/ex02List")
+    public String ex02List(@RequestParam("ids") ArrayList<String> ids){
+        log.info("ex02List page //ids : "+ ids);
+        return "ex02List";
+    }//ex02List(ArrayList<String>)
+
+    @GetMapping("ex02Array")
+    public String ex02Array(@RequestParam("param") String[] param){
+        log.info("ex02Array page //param : "+ Arrays.toString(param));
+        return "ex02Array";
+    }//ex02Array(String[])
+
+    @GetMapping("/ex02Bean")
+    public String ex02Bean(SampleDTOList list){
+        log.info("ex02Bean // list : " +list);
+        return "ex02Bean";
+    }//ex02Bean(SampleDTOList)
+    /* /sample/ex02Bean?list%5B0%5D.name=aaa&list%5B2%5D.name=bbb 로 접근하는 경우
+    INFO  com.yj.controller.SampleController - ex02Bean //
+    list : SampleDTOList(list=[SampleDTO(name=aaa, age=0),
+    SampleDTO(name=null, age=0),
+    SampleDTO(name=bbb, age=0)]  와 같이 출력됩니다. > List[0]과 List[2]만 채워줄 경우 List[1]은 null인 상태로 생성)
+*/
 }//SampleController
+
 
 
 
