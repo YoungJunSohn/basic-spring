@@ -35,5 +35,6 @@
     <mybatis-spring:scan base-package="com.yj.mapper"/>
     <context:component-scan base-package="com.yj.sample"/>
     <context:component-scan base-package="com.yj.controller"/>
+    <context:component-scan base-package="com.yj.exception"/>
 </beans>
 

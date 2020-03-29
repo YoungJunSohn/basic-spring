@@ -4,10 +4,15 @@ import com.yj.domain.SampleDTO;
 import com.yj.domain.SampleDTOList;
 import com.yj.domain.TodoDTO;
 import lombok.extern.log4j.Log4j2;
+import oracle.ucp.proxy.annotation.Post;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,6 +100,41 @@ public class SampleController {
         log.info("page : "+page);
         return "/sample/ex04";
     }//ex04(SampleDTO, int)
+
+    @GetMapping("/ex06")
+    public @ResponseBody SampleDTO ex06(){
+        SampleDTO dto = new SampleDTO();
+        dto.setAge(10);
+        dto.setName("손영준");
+        log.info("ex06 : "+dto);
+        return dto;
+    }//ex06();
+
+    @GetMapping("ex07")
+    public ResponseEntity<String> ex07(){
+        String msg = "{\"name\":\"손영준\"}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        log.info("ex07..............");
+        return new ResponseEntity<>(msg, headers, HttpStatus.OK);
+    }//ex07()
+
+    @GetMapping("/exUpload")
+    public void exUpload(){
+        log.info("/exUpload...............");
+    }//exUpload()
+    @PostMapping("/exUploadPost")
+    public void exUploadPost(ArrayList<MultipartFile> files){
+        files.forEach(file ->{
+            log.info("------------------------------------");
+            log.info("fileName :"+file.getOriginalFilename());
+            log.info("fileSize :"+file.getSize());
+        });
+        /*
+        * 최종적으로 파일이 업로드 되기 위해서는 byte[] 처리가 필요합니다. (미구현)
+        * */
+    }//exUploadPost
+
 }//SampleController
 
 
