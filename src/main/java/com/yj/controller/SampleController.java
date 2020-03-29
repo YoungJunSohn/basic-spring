@@ -2,13 +2,14 @@ package com.yj.controller;
 
 import com.yj.domain.SampleDTO;
 import com.yj.domain.SampleDTOList;
+import com.yj.domain.TodoDTO;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -75,6 +76,25 @@ public class SampleController {
     SampleDTO(name=null, age=0),
     SampleDTO(name=bbb, age=0)]  와 같이 출력됩니다. > List[0]과 List[2]만 채워줄 경우 List[1]은 null인 상태로 생성)
 */
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(dateFormat,false));
+    }//initBinder(WebDataBinder)
+    @GetMapping("/ex03")
+    public String ex03(TodoDTO todoDTO){
+        log.info("todoDTO : "+todoDTO);
+        return "ex03";
+    }//ex03(TodoDTO)
+
+    @GetMapping("/ex04")
+    public String ex04(SampleDTO dto,@ModelAttribute("page") int page){
+        log.info("dto : "+dto);//String name,int age
+
+        log.info("page : "+page);
+        return "/sample/ex04";
+    }//ex04(SampleDTO, int)
 }//SampleController
 
 
