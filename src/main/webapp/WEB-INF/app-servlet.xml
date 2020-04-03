@@ -12,6 +12,7 @@
     <mvc:annotation-driven/>
 
     <!--applicationContext 과의 연동을 위한 요소 선택-->
+    <context:component-scan base-package="com.yj.sample"/>
     <context:component-scan base-package="com.yj.controller"/>
     <context:component-scan base-package="com.yj.exception"/>
     <!-- ViewResolver 설정 -->

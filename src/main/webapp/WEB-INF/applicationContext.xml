@@ -32,7 +32,9 @@
     </bean>
 
     <!-- Spring bean 등록을 위한 설정 -->
+    
     <mybatis-spring:scan base-package="com.yj.mapper"/>
+    <context:component-scan base-package="com.yj.service"/>
     <context:component-scan base-package="com.yj.sample"/>
     <context:component-scan base-package="com.yj.controller"/>
     <context:component-scan base-package="com.yj.exception"/>
