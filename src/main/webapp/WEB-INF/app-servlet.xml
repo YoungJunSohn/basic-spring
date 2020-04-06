@@ -8,6 +8,9 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- css/js와 같은 정적인 자원 경로는 resource 경로로 지정 -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
     <!-- @RequestMapping 과 같은 어노테이션 사용 xmlns:mvc 주소 주의 (http://www.springframework.org/schema/mvc) -->
     <mvc:annotation-driven/>
 
