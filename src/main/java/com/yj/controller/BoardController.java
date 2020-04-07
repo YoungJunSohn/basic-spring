@@ -26,7 +26,7 @@ public class BoardController {
         // 이를 통해 BoardServiceImpl 객체의 GetList 결과를 담아 전달합니다.
         //log.info("list입니다.");
         model.addAttribute("list", service.getList());
-    }//list(Model)
+    }//list(Model) get
 
     @PostMapping("/register")
     public String register(BoardVO board, RedirectAttributes rttr){
@@ -34,12 +34,12 @@ public class BoardController {
         service.register(board);
         rttr.addFlashAttribute("result",board.getBno());
         return "redirect:/board/list";//글 등록 후 리다이렉트 이동으로 board list를 출력합니다.
-    }//register()
+    }//register() post
 
     @GetMapping("/get")
     public void get(@RequestParam("bno") Long bno, Model model){
         model.addAttribute("board",service.get(bno));
-    }//get()
+    }//get() get
 
     @PostMapping("/modify")
     public String modify(BoardVO board, RedirectAttributes rttr){
@@ -49,7 +49,7 @@ public class BoardController {
             rttr.addFlashAttribute("result","success");
         }//if()
         return "redirect:/board/list";
-    }//modify()
+    }//modify() post
 
 
     @PostMapping("/remove")
@@ -59,7 +59,11 @@ public class BoardController {
             rttr.addFlashAttribute("result", "success");
         }//if()
         return "redirect:/board/list";
-    }//delete()
+    }//delete() post
 
     /*         bootstrap 적용 후            */
+    @GetMapping("/register")
+    public void register(){
+        //그저 입력 페이지를 연결해주는 역할이기에 비즈니스 로직이 필요하지 않다고 판단.
+    }//register() get
 }//BoardController
