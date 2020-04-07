@@ -24,7 +24,7 @@ public class BoardController {
     public void list(@NotNull Model model){
         //Model 객체는 게시물을 목록을 전달하는 파라미터로 지정되고,
         // 이를 통해 BoardServiceImpl 객체의 GetList 결과를 담아 전달합니다.
-        log.info("list입니다.");
+        //log.info("list입니다.");
         model.addAttribute("list", service.getList());
     }//list(Model)
 
@@ -60,4 +60,6 @@ public class BoardController {
         }//if()
         return "redirect:/board/list";
     }//delete()
+
+    /*         bootstrap 적용 후            */
 }//BoardController

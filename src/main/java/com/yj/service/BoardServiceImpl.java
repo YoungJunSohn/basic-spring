@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardVO> getList() {
-        log.info("리스트를 세팅합니다(serviceImpl)");
+        //log.info("리스트를 세팅합니다(serviceImpl)");
         return mapper.getList();
     }
 

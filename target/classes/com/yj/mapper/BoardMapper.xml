@@ -11,6 +11,7 @@
     <insert id="insert">
         insert into tbl_board (bno, title, content, writer)
         values (seq_board.nextval, #{title},#{content},#{writer})
+        order by 1 desc
     </insert>
     <insert id="insertSelectKey">
         <selectKey keyProperty="bno" order="BEFORE" resultType="long">
