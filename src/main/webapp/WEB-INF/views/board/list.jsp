@@ -10,6 +10,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<div class="panel-heading">~~게시판 페이지~~
+    <button id="regBtn" type="button" class="btn btn-xs pull-right">새글 등록하기</button>
+</div>
 <table class="table table-striped table-bordered table-hover">
     <thead>
     <tr>
@@ -638,9 +641,15 @@
                 $(".modal-body").html(parseInt(result)+"번 게시글이 등록되었습니다.");
             }//if(parseInt)
             $("#myModal").modal("show");
+
+            $("#regBtn").on("click",function () {
+                self.location = "/board/register"; //클릭시 페이지 이동
+            });//#regBtn click
+
         }//checkModal(result)
     });
 </script>
+
 
 
 <%@ include file="../includes/footer.jsp"%>
