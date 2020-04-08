@@ -12,8 +12,7 @@
 </div>
 <!-- /#wrapper -->
 
-<%--범용성을 위해 header에 jquery 선언--%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -28,17 +27,17 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="/resources/dist/js/sb-admin-2.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#dataTables-example').DataTable({
-            responsive:true
-        });
-        $('.sidebar-nav')
-            .attr("class", "sidebar-nav navbar-collapse collapse")
-            .attr("aria-expended", 'false')
-            .attr("style","height:1px");
-    });
-</script>
+<%--<script>--%>
+<%--    $(document).ready(function () {--%>
+<%--        $('#dataTables-example').DataTable({--%>
+<%--            responsive:true--%>
+<%--        });--%>
+<%--        $('.sidebar-nav')--%>
+<%--            .attr("class", "sidebar-nav navbar-collapse collapse")--%>
+<%--            .attr("aria-expended", 'false')--%>
+<%--            .attr("style","height:1px");--%>
+<%--    });--%>
+<%--</script>--%>
 </body>
 
 </html>

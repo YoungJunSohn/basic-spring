@@ -5,13 +5,12 @@
 <mapper namespace="com.yj.mapper.BoardMapper">
     <!-- CDATA는 XML문서에서 부등호를 사용하기 위하여 작성합니다. -->
     <select id="getList" resultType="com.yj.domain.BoardVO">
-        <![CDATA[select * from tbl_board where bno > 0]]>
+        <![CDATA[select * from tbl_board where bno > 0 order by 1 desc ]]>
     </select> <!--//쿼리문 작성 완료, BoardMapper interface에서 sql을 제거합니다.-->
 
     <insert id="insert">
         insert into tbl_board (bno, title, content, writer)
         values (seq_board.nextval, #{title},#{content},#{writer})
-        order by 1 desc
     </insert>
     <insert id="insertSelectKey">
         <selectKey keyProperty="bno" order="BEFORE" resultType="long">
