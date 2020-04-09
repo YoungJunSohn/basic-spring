@@ -27,7 +27,7 @@
     <c:forEach items="${list}" var="board">
         <tr>
             <td><c:out value="${board.bno}"/></td>
-            <td><c:out value="${board.title}"/></td>
+            <td><a target="_blank" href="/board/get?bno=<c:out value="${board.bno}"/>"></a><c:out value="${board.title}"/></td>
             <td><c:out value="${board.content}"/></td>
             <td><c:out value="${board.writer}"/></td>
             <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
@@ -631,16 +631,19 @@
         //console.log(result);
         <%-- modal 추가 --%>
         checkModal(result); //checkModal 함수 호출
+
+        history.replaceState({},null,null);
+
         function checkModal(result) {
             // alert("확인!");
-            if(result===''){
-                console.log("망함");
-                return;
+            if(result===''||history.state){
+                console.log("리스트 페이지입니다.")
+                //return;
             }//if(result)
             if(parseInt(result)>0){
                 $(".modal-body").html(parseInt(result)+"번 게시글이 등록되었습니다.");
+                $("#myModal").modal("show");
             }//if(parseInt)
-            $("#myModal").modal("show");
 
             $("#regBtn").on("click",function () {
                 self.location = "/board/register"; //클릭시 페이지 이동
@@ -649,7 +652,6 @@
         }//checkModal(result)
     });
 </script>
-
 
 
 <%@ include file="../includes/footer.jsp"%>

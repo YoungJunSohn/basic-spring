@@ -36,7 +36,7 @@ public class BoardController {
         return "redirect:/board/list";//글 등록 후 리다이렉트 이동으로 board list를 출력합니다.
     }//register() post
 
-    @GetMapping("/get")
+    @GetMapping({"/get","/modify"})
     public void get(@RequestParam("bno") Long bno, Model model){
         model.addAttribute("board",service.get(bno));
     }//get() get
@@ -66,4 +66,6 @@ public class BoardController {
     public void register(){
         //그저 입력 페이지를 연결해주는 역할이기에 비즈니스 로직이 필요하지 않다고 판단.
     }//register() get
+
+
 }//BoardController
