@@ -34,12 +34,39 @@
                 <label>작성자<input class="form-control" name="writer" readonly="readonly"
                                  value='<c:out value="${board.writer}"/>'/></label>
             </div><!--/작성자-->
-            <button data-oper="modify" class="btn btn-default"
-                    onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'"> 수정 </button>
-            <button data-oper="list" class="btn-default btn"
-                    onclick="location.href='/board/list'"> 목록 </button>
+<%--            <button data-oper="modify" class="btn btn-default"--%>
+<%--                    onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'"> 수정 </button>--%>
+<%--            <button data-oper="list" class="btn-default btn"--%>
+<%--                    onclick="location.href='/board/list'"> 목록 </button>--%>
+            <%--다양한 상황 처리를 위한 수정(form 요소 추가 > input type hidden으로 은닉처리)--%>
+            <button data-oper="modify" class="btn btn-default"> 수정 </button>
+            <button data-oper="list" class="btn-default btn"> 목록 </button>
+
+            <form id="operForm" action="/board/modify" method="get">
+                <input type="hidden" id="bno" value="<c:out value="${board.bno}"/>"/>
+            </form>
         </div><!--/. end panel body-->
     </div><!--/. end panel-->
 </div>
 <!--/. row-->
+<script>
+    $(document).ready(function () {
+
+        var operForm = $("#operForm");
+
+        $("button[data-oper='modify']").on("click",function (e) {
+            console.log("수정버튼누름, 파라미터 = "+'<c:out value="${board.bno}"/>');
+            // operForm.attr("action","/board/modify");
+            console.log(operForm.attr("action"));
+            // operForm.submit();
+        });//button modify click
+
+        $("button[data-oper='list']").on("click",function () {
+            //list의 경우 get방식 파라미터로 넘겨줄때 bno가 추가되지 않아야 하므로 제거합니다.
+            operForm.find("bno").remove();
+            operForm.attr("action","/board/list");
+            operForm.submit();
+        });//button list click
+    });//document.ready
+</script>
 <%@ include file="../includes/footer.jsp" %>

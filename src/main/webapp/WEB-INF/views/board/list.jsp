@@ -41,14 +41,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">감사합니다</h4>
             </div>
             <div class="modal-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                처리가 완료되었습니다.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">끄기</button>
+                <button type="button" class="btn btn-primary">확인</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -628,22 +628,23 @@
     $(document).ready(function () {
         <%--상황에 따른 메시지 확인 방법 (새로운 게시글이 등록될 때 modal 창이 팝업됩니다.)--%>
         var result = '<c:out value="${result}"/>';
-        //console.log(result);
-        <%-- modal 추가 --%>
         checkModal(result); //checkModal 함수 호출
 
         history.replaceState({},null,null);
 
         function checkModal(result) {
             // alert("확인!");
-            if(result===''||history.state){
-                console.log("리스트 페이지입니다.")
-                //return;
+            if(result===''){
+                console.log("리스트 페이지입니다.");
+                return;
+            }else if(result===history.state){
+                console.log(history.state.location);
+                return;
             }//if(result)
             if(parseInt(result)>0){
                 $(".modal-body").html(parseInt(result)+"번 게시글이 등록되었습니다.");
-                $("#myModal").modal("show");
             }//if(parseInt)
+            $("#myModal").modal("show");
 
             $("#regBtn").on("click",function () {
                 self.location = "/board/register"; //클릭시 페이지 이동
