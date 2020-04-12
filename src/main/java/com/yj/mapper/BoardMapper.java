@@ -1,6 +1,7 @@
 package com.yj.mapper;
 
 import com.yj.domain.BoardVO;
+import com.yj.domain.Criteria;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +19,7 @@ public interface BoardMapper {
     public int delete(Long no);
 
     public int update(BoardVO board);
+
+    /*        페이징 처리         */
+    public List<BoardVO> getListWithPaging(Criteria cri);
 }//BoardMapper

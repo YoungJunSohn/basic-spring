@@ -68,8 +68,8 @@
                 formObj.attr("action","/board/remove");
                 console.log("넘어가는 주소"+formObj.attr("action"));
             }else if (operation === 'list'){
-                self.location="/board/list";
-                return;
+                formObj.attr("action","/board/list").attr("method","get");
+                formObj.empty();
             }//if end
             formObj.submit();
         })//$on.click fn

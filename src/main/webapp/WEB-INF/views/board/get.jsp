@@ -43,7 +43,7 @@
             <button data-oper="list" class="btn-default btn"> 목록 </button>
 
             <form id="operForm" action="/board/modify" method="get">
-                <input type="hidden" id="bno" value="<c:out value="${board.bno}"/>"/>
+                <input type="hidden" id="bno" name="bno" value="<c:out value="${board.bno}"/>"/>
             </form>
         </div><!--/. end panel body-->
     </div><!--/. end panel-->
@@ -54,11 +54,12 @@
 
         var operForm = $("#operForm");
 
-        $("button[data-oper='modify']").on("click",function (e) {
+        $("button[data-oper='modify']").on("click",function () {
             console.log("수정버튼누름, 파라미터 = "+'<c:out value="${board.bno}"/>');
-            // operForm.attr("action","/board/modify");
+            /*var url = "/board/modify?bno="+$("#bno").val();
+            operForm.attr("action",url); //case 1*/
             console.log(operForm.attr("action"));
-            // operForm.submit();
+            operForm.submit();
         });//button modify click
 
         $("button[data-oper='list']").on("click",function () {
