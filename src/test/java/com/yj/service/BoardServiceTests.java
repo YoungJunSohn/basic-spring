@@ -1,6 +1,7 @@
 package com.yj.service;
 
 import com.yj.domain.BoardVO;
+import com.yj.domain.Criteria;
 import com.yj.mapper.BoardMapper;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -9,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
@@ -68,7 +71,11 @@ public class BoardServiceTests {
             boardService.modify(board);
             log.info("수정 완료!"+boardService.get(no));
         }//if()
-
     }//modify()
+
+    @Test
+    public void getListPaging(){
+          boardService.getList(new Criteria(2,10)).forEach(board->log.info(board));
+    }//getListPaging
 }//BoardServiceTests
 

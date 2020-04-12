@@ -2,6 +2,7 @@ package com.yj.controller;
 
 import com.sun.istack.internal.NotNull;
 import com.yj.domain.BoardVO;
+import com.yj.domain.Criteria;
 import com.yj.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,13 +21,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BoardController {
     private BoardService service;
 
+    /* 04/12  페이징처리된 리스트를 화면에 출력 */
     @GetMapping("/list")
+    public void list(Model model, Criteria cri){
+        model.addAttribute("list",service.getList(cri));
+    }//list(model, cri)
+
+    /*@GetMapping("/list")
     public void list(@NotNull Model model){
         //Model 객체는 게시물을 목록을 전달하는 파라미터로 지정되고,
         // 이를 통해 BoardServiceImpl 객체의 GetList 결과를 담아 전달합니다.
         //log.info("list입니다.");
         model.addAttribute("list", service.getList());
-    }//list(Model) get
+    }//list(Model) get*/
 
     @PostMapping("/register")
     public String register(BoardVO board, RedirectAttributes rttr){

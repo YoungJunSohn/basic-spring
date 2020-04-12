@@ -1,6 +1,7 @@
 package com.yj.service;
 
 import com.yj.domain.BoardVO;
+import com.yj.domain.Criteria;
 import com.yj.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,4 +45,9 @@ public class BoardServiceImpl implements BoardService {
         return mapper.getList();
     }
 
+    @Override
+    public List<BoardVO> getList(Criteria cri){
+        log.info("페이징 처리완료, 현재 화면에 출력될 결과 :"+cri);
+        return mapper.getListWithPaging(cri);
+    }//getList(Criteria cri)
 }//BoardServiceImpl

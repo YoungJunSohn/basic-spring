@@ -1,6 +1,7 @@
 package com.yj.service;
 
 import com.yj.domain.BoardVO;
+import com.yj.domain.Criteria;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface BoardService {
     public boolean remove(Long bno);
 
     public List<BoardVO> getList();
+    public List<BoardVO> getList(Criteria cri);
 }//BoardService
