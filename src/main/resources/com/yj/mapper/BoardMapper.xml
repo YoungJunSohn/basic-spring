@@ -46,5 +46,9 @@
         )
         WHERE   rn > (#{pageNum} -1) * #{amount}
 ]]>
-    </select><!--/.페이징처리-->
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        <![CDATA[ SELECT count(*) FROM tbl_board WHERE bno > 0]]>
+    </select>
 </mapper>

@@ -69,7 +69,13 @@
                 console.log("넘어가는 주소"+formObj.attr("action"));
             }else if (operation === 'list'){
                 formObj.attr("action","/board/list").attr("method","get");
+                //페이징 처리를 위해 pageNum과 amount를 함께 넘깁니다.
+                var pageNumTag = $("input[name='pageNum']").clone();
+                var amountTag = $("input[name = 'amount']").clone();
+
                 formObj.empty();
+                formObj.append(pageNumTag);
+                formObj.append(amountTag);
             }//if end
             formObj.submit();
         })//$on.click fn

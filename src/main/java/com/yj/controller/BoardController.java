@@ -8,10 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
@@ -24,7 +21,12 @@ public class BoardController {
     /* 04/12  페이징처리된 리스트를 화면에 출력 */
     @GetMapping("/list")
     public void list(Model model, Criteria cri){
+        log.info("페이징 정보를 받아 리스트를 출력합니다. :"+cri);
         model.addAttribute("list",service.getList(cri));
+
+        int total = service.getTotal(cri);
+        log.info("total 페이지 :"+total);
+        model.addAttribute("pageMaker",new PageDTO(cri,total));
     }//list(model, cri)
 
     /*@GetMapping("/list")
@@ -61,11 +63,18 @@ public class BoardController {
 
 
     @PostMapping("/remove")
-    public String delete(Long bno, RedirectAttributes rttr){
+    //public String delete(Long bno, RedirectAttributes rttr){
+    public String delete(@RequestParam("bno") Long bno,
+                         @ModelAttribute("cri") Criteria cri,
+                         RedirectAttributes rttr){
+// 04/13 삭제 메서드 작동 방식 변경 > cri를 받아서 삭제
         if(service.remove(bno)){
             log.info("remove 메서드가 작동합니다."+bno+"번 글이 삭제됩니다.");
             rttr.addFlashAttribute("result", "success");
         }//if()
+        rttr.addFlashAttribute("pageNum",cri.getPageNum());
+        rttr.addFlashAttribute("amount",cri.getAmount());
+
         return "redirect:/board/list";
     }//delete() post
 

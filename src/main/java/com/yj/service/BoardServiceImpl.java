@@ -45,9 +45,15 @@ public class BoardServiceImpl implements BoardService {
         return mapper.getList();
     }
 
+    //페이징 처리
     @Override
     public List<BoardVO> getList(Criteria cri){
         log.info("페이징 처리완료, 현재 화면에 출력될 결과 :"+cri);
         return mapper.getListWithPaging(cri);
     }//getList(Criteria cri)
+    @Override
+    public int getTotal(Criteria cri){
+        log.info("총 페이지 수를 가져옵니다.");
+        return mapper.getTotalCount(cri);
+    }//getTotal(cri)
 }//BoardServiceImpl
