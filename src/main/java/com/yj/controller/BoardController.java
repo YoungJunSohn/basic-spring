@@ -3,6 +3,7 @@ package com.yj.controller;
 import com.sun.istack.internal.NotNull;
 import com.yj.domain.BoardVO;
 import com.yj.domain.Criteria;
+import com.yj.domain.PageDTO;
 import com.yj.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
