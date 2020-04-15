@@ -21,26 +21,26 @@ public class BoardMapperTests {
 
     @Test
     public void testGetList(){
-        mapper.getList().forEach(board ->log.info(board) );
+//        mapper.getList().forEach(board ->log.info(board) );
     };
 
     @Test
     public void testInsert(){
-        BoardVO board = new BoardVO();
+        /*BoardVO board = new BoardVO();
         board.setTitle("새로 작성하는 글");
         board.setContent("새로 작성하는 내용");
         board.setWriter("newbie");
         //mapper.insert(board);
         mapper.insertSelectKey(board);
-        log.info(board);
+        log.info(board);*/
     }//testInsert()
 
     @Test
     public void testRead(){
         //게시물 번호로 불러오는 게시물 정보
         //warning! -- 게시물 번호가 존재하는지 반드시 그 여부를 확인해야 합니다.
-        BoardVO board = mapper.read(5L);
-        log.info(board);
+        /*BoardVO board = mapper.read(5L);
+        log.info(board);*/
     }//testRead()
 
     @Test
@@ -50,7 +50,7 @@ public class BoardMapperTests {
 
     @Test
     public void testUpdate(){
-        Long num = 5L;
+        /*Long num = 5L;
         BoardVO board = new BoardVO();//데이터를 객체형식으로 넘기기위해서 생성합니다.
         board.setTitle("수정된 제목");
         board.setContent("수정된 내용");
@@ -59,17 +59,29 @@ public class BoardMapperTests {
         board.setBno(num);
 
         int count = mapper.update(board);
-        log.info("Update 구문 실행 : "+num+"번 글을 수정합니다. ->"+count);
+        log.info("Update 구문 실행 : "+num+"번 글을 수정합니다. ->"+count);*/
     }//testUpdate()
 
     @Test
     public void testPaging(){
-        Criteria cri = new Criteria();
+        /*Criteria cri = new Criteria();
 
         List<BoardVO> list = mapper.getListWithPaging(cri);
 
-        list.forEach(board ->log.info(board));
+        list.forEach(board ->log.info(board));*/
     }//testPaging
+
+
+    //검색 테스트
+    @Test
+    public void testSearch(){
+        Criteria cri = new Criteria();
+        cri.setKeyword("새로");
+        cri.setType("TC");
+
+        List<BoardVO> list = mapper.getListWithPaging(cri);
+        list.forEach(board-> log.info(board));
+    }//testSearch()
 }//BoardMapperTests()
 
 /*

@@ -34,7 +34,7 @@
         where bno=#{bno}
     </update>
 
-    <!--페이징 처리-->
+    <!--페이징 처리 & 검색 처리-->
     <select id="getListWithPaging" resultType="com.yj.domain.BoardVO">
         <![CDATA[
         SELECT bno, title, content, writer, regdate, updatedate
@@ -42,13 +42,45 @@
             SELECT /*+INDEX_DESC(tbl_board pk_board)*/
                 rownum rn, bno, title, content, writer, regdate, updatedate
             FROM tbl_board
-            WHERE rownum <= #{pageNum} * #{amount}
-        )
+            WHERE
+        ]]>
+        <include refid="criteria"/>
+            <![CDATA[ rownum <= #{pageNum} * #{amount}
+            )
         WHERE   rn > (#{pageNum} -1) * #{amount}
-]]>
+            ]]>
     </select>
+    <!--쿼리문이 너무 길어지므로 sql태그를 이용하여 분할하고, include 태그로 첨부합니다.-->
+<sql id="criteria">
+    <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+        <foreach collection="typeArr" item="type">
+            <trim prefix="OR">
+                <choose>
+                    <!--검색 조건이 'T'인 경우 title(제목)이 키워드인 항목을 검색합니다-->
+                    <when test="type == 'T'.toString()" >
+                        title like '%'||#{keyword}||'%'
+                    </when>
+                    <!--검색 조건이 'C'인 경우 content(내용)이 키워드인 항목을 검색합니다-->
+                    <when test="type == 'C'.toString()">
+                        content like '%'||#{keyword}||'%'
+                    </when>
+                    <!--검색 조건이 'W'인 경우 writer(글쓴이)가 키워드인 항목을 검색합니다-->
+                    <when test="type == 'W'.toString()">
+                        writer like '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </trim>
+        </foreach>
+    </trim>
+</sql><!--/.criteria-->
+
 
     <select id="getTotalCount" resultType="int">
-        <![CDATA[ SELECT count(*) FROM tbl_board WHERE bno > 0]]>
+
+        SELECT count(*)
+        FROM tbl_board
+        WHERE
+        <include refid="criteria"></include>
+            <![CDATA[ bno > 0 ]]>
     </select>
 </mapper>
