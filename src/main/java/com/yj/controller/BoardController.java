@@ -53,12 +53,20 @@ public class BoardController {
     }//get() get
 
     @PostMapping("/modify")
-    public String modify(BoardVO board, RedirectAttributes rttr){
+    public String modify(BoardVO board,
+                         RedirectAttributes rttr,
+                         @ModelAttribute("cri") Criteria cri){
         log.info("글 수정 메서드 접근 완료 , 현재 board객체 : "+board);
 
         if(service.modify(board)){
             rttr.addFlashAttribute("result","success");
         }//if()
+
+        rttr.addFlashAttribute("pageNum", cri.getPageNum());
+        rttr.addFlashAttribute("amount", cri.getAmount());
+        rttr.addFlashAttribute("type", cri.getType());
+        rttr.addFlashAttribute("keyword", cri.getKeyword());
+
         return "redirect:/board/list";
     }//modify() post
 
@@ -75,6 +83,8 @@ public class BoardController {
         }//if()
         rttr.addFlashAttribute("pageNum",cri.getPageNum());
         rttr.addFlashAttribute("amount",cri.getAmount());
+        rttr.addFlashAttribute("type", cri.getType());
+        rttr.addFlashAttribute("keyword", cri.getKeyword());
 
         return "redirect:/board/list";
     }//delete() post

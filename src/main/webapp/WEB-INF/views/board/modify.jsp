@@ -18,6 +18,12 @@
         </div>
         <div class="panel-body">
             <form action="/board/modify" role="form" method="post">
+
+                <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+                <input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
+                <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
+                <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
+
                 <div class="form-group">
                     <label>글 번호<input class="form-control" name="bno" readonly="readonly"
                                       value='<c:out value="${board.bno}"/>'/> </label>
@@ -72,10 +78,14 @@
                 //페이징 처리를 위해 pageNum과 amount를 함께 넘깁니다.
                 var pageNumTag = $("input[name='pageNum']").clone();
                 var amountTag = $("input[name = 'amount']").clone();
+                var keywordTag = $("input[name='keyword']").clone();
+                var typeTag = $("input[name='type']").clone();
 
                 formObj.empty();
                 formObj.append(pageNumTag);
                 formObj.append(amountTag);
+                formObj.append(typeTag);
+                formObj.append(keywordTag);
             }//if end
             formObj.submit();
         })//$on.click fn
