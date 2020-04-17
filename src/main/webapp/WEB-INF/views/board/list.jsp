@@ -27,7 +27,8 @@
     <c:forEach items="${list}" var="board">
         <tr>
             <td><c:out value="${board.bno}"/></td>
-            <td><a class="move" target="_blank" href="/board/get?bno=<c:out value="${board.bno}"/>">
+            <td>
+                <a class="move" href="/board/get?bno=<c:out value="${board.bno}"/>">
                 <c:out value="${board.title}"/></a>
             </td>
             <td><c:out value="${board.content}"/></td>
@@ -88,10 +89,10 @@
     </ul><!--/.pagination-->
 </div><%--/.paginate--%>
 <form action="/board/list" method="get" id="actionForm">
-    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-    <input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
-    <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
-    <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
+    <input type="text" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+    <input type="text" name="amount" value="${pageMaker.cri.amount}"/>
+    <input type="text" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
+    <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 </form><!--/페이징 처리 완료-->
 
 
@@ -121,7 +122,12 @@
     $(document).ready(function () {
         <%--상황에 따른 메시지 확인 방법 (새로운 게시글이 등록될 때 modal 창이 팝업됩니다.)--%>
         var result = '<c:out value="${result}"/>';
+        var actionForm = $("#actionForm");
+
+
         checkModal(result); //checkModal 함수 호출
+
+
 
         history.replaceState({},null,null);
 
@@ -144,18 +150,24 @@
         $(".move").on("click",function (e) {
             e.preventDefault();
             actionForm.append("<input  type='hidden' name='bno'" +
-                "value='"+$(this).attr("href")+"'/>");
+                "value="+$(this).parents().find('td').eq(0).text()+">");
             actionForm.attr("action","/board/get");
+            console.log($(this).parents().find('td').eq(0).text()+"   주소를 붙였습니다.");
             actionForm.submit();
-        });//게시글로 이동
+        });//게시글로 이동(/board/get?bno=.....)
 
+        /*String 형으로 입력이되어 controller에서 파라미터를 받아오지 못하는 에러를 확인, 왜그럴까?
 
+           append("") 안에 요소를 넣을 때, 줄바꿈연결은 ""이 맞지만,
+           이때 value값에 ""가 포함되는 경우 String으로 값이 바뀌어 버린다!
+
+         */
 
         $("#regBtn").on("click",function () {
             self.location = "/board/register"; //클릭시 페이지 이동
         });//#regBtn click
 
-        var actionForm = $("#actionForm");
+
         $(".paginate_button a").on("click",function (e) {
             e.preventDefault();
             console.log('click');

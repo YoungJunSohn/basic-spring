@@ -34,6 +34,7 @@
                 <label>작성자<input class="form-control" name="writer" readonly="readonly"
                                  value='<c:out value="${board.writer}"/>'/></label>
             </div><!--/작성자-->
+
 <%--            <button data-oper="modify" class="btn btn-default"--%>
 <%--                    onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'"> 수정 </button>--%>
 <%--            <button data-oper="list" class="btn-default btn"--%>

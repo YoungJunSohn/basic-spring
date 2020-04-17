@@ -47,7 +47,9 @@ public class BoardController {
     }//register() post
 
     @GetMapping({"/get","/modify"})
-    public void get(@RequestParam(value = "bno") Long bno, Model model){
+    public void get(@RequestParam(value = "bno") Long bno,
+                    @ModelAttribute("cri") Criteria cri, Model model){
+
         //@RequestParam을 지정할 경우, 파라미터가 존재하지 않을 때 에러가 발생합니다.
         model.addAttribute("board",service.get(bno));
     }//get() get
