@@ -28,7 +28,7 @@
         <tr>
             <td><c:out value="${board.bno}"/></td>
             <td>
-                <a class="move" href="/board/get?bno=<c:out value="${board.bno}"/>">
+                <a class="move" href="<c:out value="${board.bno}"/>">
                 <c:out value="${board.title}"/></a>
             </td>
             <td><c:out value="${board.content}"/></td>
@@ -123,6 +123,7 @@
         <%--상황에 따른 메시지 확인 방법 (새로운 게시글이 등록될 때 modal 창이 팝업됩니다.)--%>
         var result = '<c:out value="${result}"/>';
         var actionForm = $("#actionForm");
+        var $this = $(this);
 
 
         checkModal(result); //checkModal 함수 호출
@@ -149,10 +150,8 @@
 
         $(".move").on("click",function (e) {
             e.preventDefault();
-            actionForm.append("<input  type='hidden' name='bno'" +
-                "value="+$(this).parents().find('td').eq(0).text()+">");
+            actionForm.append("<input type='hidden' name='bno' value='"+$this.attr("href")+"'>");
             actionForm.attr("action","/board/get");
-            console.log($(this).parents().find('td').eq(0).text()+"   주소를 붙였습니다.");
             actionForm.submit();
         });//게시글로 이동(/board/get?bno=.....)
 

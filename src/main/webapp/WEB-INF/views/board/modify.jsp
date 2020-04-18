@@ -19,10 +19,10 @@
         <div class="panel-body">
             <form action="/board/modify" role="form" method="post">
 
-                <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-                <input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
-                <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
-                <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
+                <input type="text" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+                <input type="text" name="amount" value="${pageMaker.cri.amount}"/>
+                <input type="text" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
+                <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 
                 <div class="form-group">
                     <label>글 번호<input class="form-control" name="bno" readonly="readonly"
@@ -68,7 +68,7 @@
 
             var operation = $(this).data("oper");
 
-            console.log(operation); //data- 속성을 읽어 다르게 동작하는 버튼을 작성합니다(속성은 모두 submit)
+            console.log(operation.toString()); //data- 속성을 읽어 다르게 동작하는 버튼을 작성합니다(속성은 모두 submit)
 
             if(operation === 'remove'){
                 formObj.attr("action","/board/remove");
@@ -86,6 +86,10 @@
                 formObj.append(amountTag);
                 formObj.append(typeTag);
                 formObj.append(keywordTag);
+                console.log("pageNum : "+formObj.find(pageNumTag).val());
+                console.log("amountTag : "+formObj.find(amountTag).val());
+                console.log("typeTag : "+formObj.find(typeTag).val());
+                console.log("keywordTag : "+formObj.find(keywordTag).val());
             }//if end
             formObj.submit();
         })//$on.click fn

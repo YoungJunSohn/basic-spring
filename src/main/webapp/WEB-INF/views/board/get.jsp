@@ -44,11 +44,11 @@
             <button data-oper="list" class="btn-default btn"> 목록 </button>
 
             <form id="operForm" action="/board/modify" method="get">
-                <input type="hidden" id="bno" name="bno" value="<c:out value="${board.bno}"/>"/>
-                <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>"/>
-                <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>"/>
-                <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>"/>
-                <input type="hidden" name="type" value='<c:out value='${cri.type}'/>'/>
+                <input type="text" id="bno" name="bno" value="<c:out value="${board.bno}"/>"/>
+                <input type="text" name="pageNum" value="<c:out value='${cri.pageNum}'/>"/>
+                <input type="text" name="amount" value="<c:out value='${cri.amount}'/>"/>
+                <input type="text" name="keyword" value="<c:out value='${cri.keyword}'/>"/>
+                <input type="text" name="type" value='<c:out value='${cri.type}'/>'/>
             </form>
         </div><!--/. end panel body-->
     </div><!--/. end panel-->
@@ -60,7 +60,11 @@
         var operForm = $("#operForm");
 
         $("button[data-oper='modify']").on("click",function () {
-            console.log("수정버튼누름, 파라미터 = "+'<c:out value="${board.bno}"/>');
+            console.log("bno = "+'<c:out value="${board.bno}"/>');
+            console.log("pageNum = "+'<c:out value="${cri.pageNum}"/>');
+            console.log("amount = "+'<c:out value="${cri.amount}"/>');
+            console.log("keyword = "+'<c:out value="${cri.keyword}"/>');
+            console.log("type = "+'<c:out value="${cri.type}"/>');
             /*var url = "/board/modify?bno="+$("#bno").val();
             operForm.attr("action",url); //case 1*/
             console.log(operForm.attr("action"));

@@ -27,6 +27,7 @@ public class BoardController {
 
         int total = service.getTotal(cri);
         log.info("total 페이지 :"+total);
+        //PageDTO를 사용할 수 있도록 pageMaker 라는 이름으로 객체를 만들어서 model에 담아줍니다.
         model.addAttribute("pageMaker",new PageDTO(cri,total));
     }//list(model, cri)
 
@@ -52,13 +53,17 @@ public class BoardController {
 
         //@RequestParam을 지정할 경우, 파라미터가 존재하지 않을 때 에러가 발생합니다.
         model.addAttribute("board",service.get(bno));
+
+        int total = service.getTotal(cri);
+        model.addAttribute("pageMaker",new PageDTO(cri,total));
     }//get() get
 
     @PostMapping("/modify")
     public String modify(BoardVO board,
                          RedirectAttributes rttr,
                          @ModelAttribute("cri") Criteria cri){
-        log.info("글 수정 메서드 접근 완료 , 현재 board객체 : "+board);
+
+        //log.info("글 수정 메서드 접근 완료 , 현재 board객체 : "+board);
 
         if(service.modify(board)){
             rttr.addFlashAttribute("result","success");
@@ -80,7 +85,7 @@ public class BoardController {
                          RedirectAttributes rttr){
 // 04/13 삭제 메서드 작동 방식 변경 > cri를 받아서 삭제
         if(service.remove(bno)){
-            log.info("remove 메서드가 작동합니다."+bno+"번 글이 삭제됩니다.");
+            log.info("delete 메서드가 작동합니다."+bno+"번 글이 삭제됩니다.");
             rttr.addFlashAttribute("result", "success");
         }//if()
         rttr.addFlashAttribute("pageNum",cri.getPageNum());
