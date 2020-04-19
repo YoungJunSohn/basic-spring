@@ -3,6 +3,7 @@ package com.yj.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Getter
 @Setter
@@ -14,6 +15,17 @@ public class Criteria{
 
     private String type;//검색 조건
     private String keyword;//검색에 사용할 키워드
+
+    //0419 : 웹페이지에서 매번 파라미터를 유지하지 않게 해주기 위해 UriComponentBuilder를 사용합니다.
+    public String getListLink(){
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+                .queryParam("pageNum", this.pageNum)
+                .queryParam("amount", this.getAmount())
+                .queryParam("type", this.getType())
+                .queryParam("keyword", this.getKeyword());
+
+        return builder.toUriString();
+    }//getListLink()
 
     public Criteria() {
         this(1, 10); //amount개씩 pageNum번 페이지를 보여줍니다.

@@ -72,14 +72,14 @@ public class BoardController {
         if(service.modify(board)){
             rttr.addFlashAttribute("result","success");
         }//if()
-        rttr.addAttribute("pageNum", cri.getPageNum());
-        rttr.addAttribute("amount", cri.getAmount());
+//        rttr.addAttribute("pageNum", cri.getPageNum());
+//        rttr.addAttribute("amount", cri.getAmount());
+//
+//        rttr.addAttribute("type", cri.getType());
+//        rttr.addAttribute("keyword", cri.getKeyword());
 
-        rttr.addAttribute("type", cri.getType());
-        rttr.addAttribute("keyword", cri.getKeyword());
-
-        log.info("flashAttributes : "+ rttr.getFlashAttributes());
-        return "redirect:/board/list";
+        //log.info("flashAttributes : "+ rttr.getFlashAttributes());
+        return "redirect:/board/list" + cri.getListLink();
     }//modify() post
 
 
@@ -93,12 +93,12 @@ public class BoardController {
             log.info("delete 메서드가 작동합니다."+bno+"번 글이 삭제됩니다.");
             rttr.addFlashAttribute("result", "success");
         }//if()
-        rttr.addAttribute("pageNum",cri.getPageNum());
-        rttr.addAttribute("amount",cri.getAmount());
-        rttr.addAttribute("type", cri.getType());
-        rttr.addAttribute("keyword", cri.getKeyword());
+//        rttr.addAttribute("pageNum",cri.getPageNum());
+//        rttr.addAttribute("amount",cri.getAmount());
+//        rttr.addAttribute("type", cri.getType());
+//        rttr.addAttribute("keyword", cri.getKeyword());
 
-        return "redirect:/board/list";
+        return "redirect:/board/list" +cri.getListLink();
     }//delete() post
 
     /*         bootstrap 적용 후            */
