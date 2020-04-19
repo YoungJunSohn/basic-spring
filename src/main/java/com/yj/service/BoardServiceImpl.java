@@ -48,7 +48,7 @@ public class BoardServiceImpl implements BoardService {
     //페이징 처리
     @Override
     public List<BoardVO> getList(Criteria cri){
-        log.info("페이징 처리완료, 현재 화면에 출력될 결과 :"+cri);
+        log.info("페이징 처리정보 :"+cri);
         return mapper.getListWithPaging(cri);
     }//getList(Criteria cri)
     @Override

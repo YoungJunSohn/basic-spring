@@ -89,10 +89,10 @@
     </ul><!--/.pagination-->
 </div><%--/.paginate--%>
 <form action="/board/list" method="get" id="actionForm">
-    <input type="text" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-    <input type="text" name="amount" value="${pageMaker.cri.amount}"/>
-    <input type="text" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
-    <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
+    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+    <input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
+    <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
+    <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 </form><!--/페이징 처리 완료-->
 
 
@@ -123,7 +123,6 @@
         <%--상황에 따른 메시지 확인 방법 (새로운 게시글이 등록될 때 modal 창이 팝업됩니다.)--%>
         var result = '<c:out value="${result}"/>';
         var actionForm = $("#actionForm");
-        var $this = $(this);
 
 
         checkModal(result); //checkModal 함수 호출
@@ -150,7 +149,7 @@
 
         $(".move").on("click",function (e) {
             e.preventDefault();
-            actionForm.append("<input type='hidden' name='bno' value='"+$this.attr("href")+"'>");
+            actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
             actionForm.attr("action","/board/get");
             actionForm.submit();
         });//게시글로 이동(/board/get?bno=.....)

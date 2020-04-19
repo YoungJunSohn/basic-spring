@@ -19,10 +19,10 @@
         <div class="panel-body">
             <form action="/board/modify" role="form" method="post">
 
-                <input type="text" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-                <input type="text" name="amount" value="${pageMaker.cri.amount}"/>
-                <input type="text" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
-                <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
+                <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>"/>
+                <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>"/>
+                <input type="hidden" name="type" value="<c:out value='${cri.type}'/>">
+                <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>">
 
                 <div class="form-group">
                     <label>글 번호<input class="form-control" name="bno" readonly="readonly"

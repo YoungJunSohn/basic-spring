@@ -1,6 +1,5 @@
 package com.yj.controller;
 
-import com.sun.istack.internal.NotNull;
 import com.yj.domain.BoardVO;
 import com.yj.domain.Criteria;
 import com.yj.domain.PageDTO;
@@ -22,11 +21,15 @@ public class BoardController {
     /* 04/12  페이징처리된 리스트를 화면에 출력 */
     @GetMapping("/list")
     public void list(Model model, Criteria cri){
-        log.info("페이징 정보를 받아 리스트를 출력합니다. :"+cri);
+        log.info("pageNum :"+model.getAttribute("pageNum"));
+        log.info("amount :"+model.getAttribute("amount"));
+        log.info("type :"+model.getAttribute("type"));
+        log.info("keyword :"+model.getAttribute("keyword"));
+
         model.addAttribute("list",service.getList(cri));
 
         int total = service.getTotal(cri);
-        log.info("total 페이지 :"+total);
+        //log.info("total 페이지 :"+total);
         //PageDTO를 사용할 수 있도록 pageMaker 라는 이름으로 객체를 만들어서 model에 담아줍니다.
         model.addAttribute("pageMaker",new PageDTO(cri,total));
     }//list(model, cri)
@@ -58,22 +61,24 @@ public class BoardController {
         model.addAttribute("pageMaker",new PageDTO(cri,total));
     }//get() get
 
+
     @PostMapping("/modify")
     public String modify(BoardVO board,
                          RedirectAttributes rttr,
                          @ModelAttribute("cri") Criteria cri){
 
-        //log.info("글 수정 메서드 접근 완료 , 현재 board객체 : "+board);
+        log.info("글 수정 메서드 접근 완료 , 현재 board객체 : "+board);
 
         if(service.modify(board)){
             rttr.addFlashAttribute("result","success");
         }//if()
+        rttr.addAttribute("pageNum", cri.getPageNum());
+        rttr.addAttribute("amount", cri.getAmount());
 
-        rttr.addFlashAttribute("pageNum", cri.getPageNum());
-        rttr.addFlashAttribute("amount", cri.getAmount());
-        rttr.addFlashAttribute("type", cri.getType());
-        rttr.addFlashAttribute("keyword", cri.getKeyword());
+        rttr.addAttribute("type", cri.getType());
+        rttr.addAttribute("keyword", cri.getKeyword());
 
+        log.info("flashAttributes : "+ rttr.getFlashAttributes());
         return "redirect:/board/list";
     }//modify() post
 
@@ -88,10 +93,10 @@ public class BoardController {
             log.info("delete 메서드가 작동합니다."+bno+"번 글이 삭제됩니다.");
             rttr.addFlashAttribute("result", "success");
         }//if()
-        rttr.addFlashAttribute("pageNum",cri.getPageNum());
-        rttr.addFlashAttribute("amount",cri.getAmount());
-        rttr.addFlashAttribute("type", cri.getType());
-        rttr.addFlashAttribute("keyword", cri.getKeyword());
+        rttr.addAttribute("pageNum",cri.getPageNum());
+        rttr.addAttribute("amount",cri.getAmount());
+        rttr.addAttribute("type", cri.getType());
+        rttr.addAttribute("keyword", cri.getKeyword());
 
         return "redirect:/board/list";
     }//delete() post
