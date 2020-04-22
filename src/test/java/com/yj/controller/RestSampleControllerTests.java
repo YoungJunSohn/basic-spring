@@ -14,19 +14,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @WebAppConfiguration
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/app-servlet.xml",
-        "file:src/main/webapp/WEB-INF/applicationContext.xml"})
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/applicationContext.xml",
+        "file:src/main/webapp/WEB-INF/app-servlet.xml"})
 @Log4j2
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RestSampleControllerTests {
 
     @Setter(onMethod_ = @Autowired)
     private WebApplicationContext ctx;
-
     private MockMvc mockMvc;
 
     @Before
@@ -36,19 +36,17 @@ public class RestSampleControllerTests {
 
     @Test
     public void testConvert() throws Exception{
-
         Ticket ticket = new Ticket();
         ticket.setTno(123);
         ticket.setGrade("A");
         ticket.setOwner("YoungJun");
-
         String jsonStr = new Gson().toJson(ticket);
 
         log.info(jsonStr);
         mockMvc.perform(MockMvcRequestBuilders.post("/restSample/ticket")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(jsonStr))
-            .andExpect();
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonStr))
+                .andExpect(MockMvcResultMatchers.status().is(200));
 
     }//testConvert()
 
