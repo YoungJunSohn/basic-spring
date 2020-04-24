@@ -1,5 +1,6 @@
 package com.yj.controller;
 
+import com.yj.domain.Criteria;
 import com.yj.domain.ReplyVO;
 import com.yj.mapper.ReplyMapper;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,8 +21,16 @@ public class ReplyMapperTests {
 
     @Setter(onMethod_ = @Autowired)
     private ReplyMapper mapper;
-
     private Long[] bnoArr = {8126610L, 8126609L, 8126608L, 8126607L, 8126606L};
+
+
+    @Test
+    public void testListWithPaging(){
+        Criteria cri = new Criteria();
+        List<ReplyVO> replies = mapper.getListWithPaging(cri,bnoArr[0]);
+        replies.forEach(reply -> log.info(reply));
+
+    }//testListWithPaging()
 
     @Test
     public void testUpdate(){

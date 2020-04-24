@@ -23,7 +23,14 @@
 
     <update id="update" parameterType="com.yj.domain.ReplyVO">
         UPDATE tbl_reply
-        SET reply = #{reply}, updateDate = sysdate
+        SET reply = #{reply}, replyer = #{replyer}, updateDate = sysdate
         WHERE rno = #{rno}
     </update>
+
+    <select id="getListWithPaging" resultType="com.yj.domain.ReplyVO">
+        SELECT rno, bno, reply, replyer, replyDate, updateDate
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno asc
+    </select>
 </mapper>
