@@ -55,19 +55,45 @@
 </div>
 <!--/. row-->
 
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i> 댓 글
+            </div><!--/.panel-heading-->
+
+            <div class="panel-body">
+                <ul class="chat">
+                    <%--댓글 시작!--%>
+                    <li class="left clearfix" data-rno="12">
+                        <div class="header">
+                            <strong class="primary-font">user00</strong>
+                            <small class="pull-right text-muted">2020-04-27 21:27</small>
+                        </div>
+                        <p>잘해쓰!</p>
+                    </li>
+                    <%--댓글 끝--%>
+                </ul>
+            </div><!--/.panel-body-->
+        </div><!--/.panel panel-default-->
+    </div><!--/.col-lg-12-->
+</div>
+<!--/.row-->
+
+<%--****************************  scrpit  *****************************--%>
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
 <script type="text/javascript">
-
     var bnoValue = '<c:out value="${board.bno}"/>';//게시글 번호를 받아와 전역변수에 저장합니다.
     console.log("선택된 게시글 번호 :" + bnoValue);
 
     //댓글 추가 테스트
-    /*replyService.add(
-        {reply:"JS test", replyer:"tester", bno:bnoValue},
-        function (result) {
-            alert("RESULT :"+ result );
-        }//function (result)
-    );//reply add test*/
+    /* replyService.add(
+         {reply:"JS test", replyer:"tester", bno:bnoValue},
+         function (result) {
+             alert("RESULT :"+ result );
+         }//function (result)
+     );//reply add test*/
 
     //댓글 리스트출력 테스트
     /*replyService.getList({bno:bnoValue,page:1}, function (list) {
@@ -77,8 +103,8 @@
     })//reply getList test*/
 
     //num번 댓글삭제 테스트
-    var testNum= 42;
-    /*replyService.remove(testNum, function (count) {
+    /*var testNum = 42;
+    replyService.remove(testNum, function (count) {
         console.log(count);
         if (count=="success"){
             alert("선택하신 댓글이 삭제되었습니다!");
@@ -101,8 +127,9 @@
     /*replyService.get(testNum, function (data) {
         console.log(data);
     })//reply get test*/
-</script>
 
+</script>
+<!--테스트-->
 
 <script><%--페이지 준비완료 시 이벤트--%>
 $(document).ready(function () {
@@ -127,6 +154,40 @@ $(document).ready(function () {
         operForm.attr("action", "/board/list");
         operForm.submit();
     });//button list click
+
+
+    var replyUL = $(".chat");
+
+    showList(1);
+
+    function showList(page) {
+        replyService.getList({bno: bnoValue, page: page || 1}, function (list) {
+            var str = "";
+
+            if (list == null || list.length == 0) {
+                replyUL.html("");
+                return
+            }//if
+
+            for (var i = 0, len = list.length || 0; i < len; i++) {
+                var timeValue = list[i].replyDate;
+                console.log("현재시각"+timeValue+"입니다");
+
+                str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
+                str += "<div><div class='header'><strong class='primary-font'>" + list[i].replyer + "</strong>";
+
+                str += "<small class='pull-right text-muted'>"
+                    + replyService.timeFormat8601(timeValue)
+                    /*+ timeValue*/
+                    + "</small></div>";
+
+                str += "<p>" + list[i].reply + "</p></div></li>";
+            }//for
+
+            replyUL.html(str);
+        })//reply getList
+    }//fn showList
+
 });//document.ready
 </script>
 <%@ include file="../includes/footer.jsp" %>

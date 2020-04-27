@@ -91,11 +91,36 @@ var replyService = (function () {
         })//$get.fail
     }//get
 
-    return {
-        add:add,//add 함수 호출,
-        getList:getList,//getJson 함수 호출
+
+    //날짜 포맷 UTC -> ISO 8601
+    function timeFormat8601(timeValue) {
+        var today = new Date();
+        var gap = today.getTime() - timeValue;
+        var dateObj = new Date(timeValue);
+        var str = ""; //선언된 변수는 get.jsp에서 사용됩니다.
+
+        if(gap < (1000 * 60 * 60 * 24)){
+            var hh = dateObj.getHours();
+            var mm = dateObj.getMinutes();
+            var ss = dateObj.getSeconds();
+
+            return [(hh > 9 ? '' : '0') + hh, ':', (mm > 9 ? '':'0') + mm, ":", (ss > 9 ? '':'0') + ss].join("");
+        }else{
+            var year = dateObj.getFullYear();
+            var month = dateObj.getMonth() + 1; //getMonth는 기본값이 0이므로 1을 더합니다.
+            var date = dateObj.getDate();
+            return [year,'/',(month > 9 ? '':'0') + month, '/',(date > 9 ? '' : '0') + date ].join('');
+        }//if~else
+    }//timeFormat8601
+
+
+    return {//전자(get.jsp에서 호출되는 함수 이름) : 후자(JSON 리턴 값)
+        add:add,
+        getList:getList,
         remove:remove,
         update:update,
-        get:get
-    };
-})();
+        get:get,
+        timeFormat8601:timeFormat8601
+    };//return
+    
+})();//자체실행함수
