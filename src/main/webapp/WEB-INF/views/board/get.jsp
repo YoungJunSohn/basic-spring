@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel-default panel">
-            <div class="panel-heading"> ~~Read~~</div><!-- /.panel-heading -->
+            <div class="panel-heading"> ~~Read~~ </div><!-- /.panel-heading -->
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -59,8 +59,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
+
             <div class="panel-heading">
                 <i class="fa fa-comments fa-fw"></i> 댓 글
+                <button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">새 댓글 작성</button>
             </div><!--/.panel-heading-->
 
             <div class="panel-body">
@@ -80,6 +82,47 @@
     </div><!--/.col-lg-12-->
 </div>
 <!--/.row-->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">댓글 모달창!</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>댓글</label>
+                    <input class="form-control" name="reply" value="새 댓글입니다!"/>
+                </div>
+
+                <div class="form-group">
+                    <label>작성자</label>
+                    <input class="form-control" name="replyer" value="작성자!!"/>
+                </div>
+
+                <div class="form-group">
+                    <label>댓글</label>
+                    <input class="form-control" name="replyDate" value=""/>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
+                <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
+                <button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
+                <button id="modalCloseBtn" type="button" class="btn btn-default">취소</button>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <%--****************************  scrpit  *****************************--%>
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
@@ -171,14 +214,14 @@ $(document).ready(function () {
 
             for (var i = 0, len = list.length || 0; i < len; i++) {
                 var timeValue = list[i].replyDate;
-                console.log("현재시각"+timeValue+"입니다");
+
+                console.log("댓글 시간 "+timeValue+" 입니다");
 
                 str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
                 str += "<div><div class='header'><strong class='primary-font'>" + list[i].replyer + "</strong>";
 
                 str += "<small class='pull-right text-muted'>"
                     + replyService.timeFormat8601(timeValue)
-                    /*+ timeValue*/
                     + "</small></div>";
 
                 str += "<p>" + list[i].reply + "</p></div></li>";
@@ -188,6 +231,40 @@ $(document).ready(function () {
         })//reply getList
     }//fn showList
 
+    //modal start
+    var modal = $(".modal");
+    var modalInputReply = modal.find("input[name='reply']");
+    var modalInputReplyer = modal.find("input[name='replyer']");
+    var modalInputReplyDate = modal.find("input[name='replyDate']");
+
+    var modalModBtn = $("#modalModBtn");
+    var modalRemoveBtn = $("#modalRemoveBtn");
+    var modalRegisterBtn = $("#modalRegisterBtn");
+
+    $("#addReplyBtn").on("click", function () {
+        modal.find("input").val("");
+        modalInputReplyDate.closest("div").hide();
+        modal.find("button[id!='modalCloseBtn']").hide();
+
+        modalRegisterBtn.show();
+        $(".modal").modal("show");
+    });//addReply click fn
+
+    modalRegisterBtn.on("click", function () {
+        var reply = {
+            reply:modalInputReply.val(),
+            replyer:modalInputReplyer.val(),
+            bno: bnoValue
+        };//reply
+
+        replyService.add(reply, function (result) {
+            alert(result);
+            modal.find("input").val();//입력한 정보가 replyService로 넘어감
+            modal.modal("hide");
+            showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
+        })//replyService.add fn
+
+    });//modalRegister click fn
 });//document.ready
 </script>
 <%@ include file="../includes/footer.jsp" %>

@@ -100,21 +100,25 @@ var replyService = (function () {
         var str = ""; //선언된 변수는 get.jsp에서 사용됩니다.
 
         if(gap < (1000 * 60 * 60 * 24)){
-            var hh = dateObj.getHours();
-            var mm = dateObj.getMinutes();
-            var ss = dateObj.getSeconds();
+            var hour = dateObj.getHours();
+            var min = dateObj.getMinutes();
+            var sec = dateObj.getSeconds();
 
-            return [(hh > 9 ? '' : '0') + hh, ':', (mm > 9 ? '':'0') + mm, ":", (ss > 9 ? '':'0') + ss].join("");
+            return [(hour > 9 ? '' : '0') + hour, ':',
+                (min > 9 ? '':'0') + min, ":",
+                (sec > 9 ? '':'0') + sec].join("");
         }else{
             var year = dateObj.getFullYear();
             var month = dateObj.getMonth() + 1; //getMonth는 기본값이 0이므로 1을 더합니다.
-            var date = dateObj.getDate();
-            return [year,'/',(month > 9 ? '':'0') + month, '/',(date > 9 ? '' : '0') + date ].join('');
+            var day = dateObj.getDate();
+            return [year,'/',
+                (month > 9 ? '':'0') + month, '/',
+                (day > 9 ? '' : '0') + day ].join('');
         }//if~else
     }//timeFormat8601
 
 
-    return {//전자(get.jsp에서 호출되는 함수 이름) : 후자(JSON 리턴 값)
+    return {//전자(get.jsp에서 호출되는 함수 이름) : 후자(JSON 으로 리턴 될 함수 이름)
         add:add,
         getList:getList,
         remove:remove,
