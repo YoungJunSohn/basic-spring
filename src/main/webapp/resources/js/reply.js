@@ -1,4 +1,4 @@
-console.log("댓글 모듈입니다....");
+// console.log("댓글 모듈입니다....");
 
 var replyService = (function () {
 /*
@@ -58,8 +58,8 @@ var replyService = (function () {
     }//func remove
 
     function update(reply, callback, error) {
-        console.log("reply.js //수정할 댓글 정보 아래에 출력 ");
-        console.log(reply);
+        // console.log("reply.js //수정할 댓글 정보 아래에 출력 ");
+        // console.log(reply);
 
         $.ajax({
             type:'put',

@@ -128,7 +128,7 @@
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
 <script type="text/javascript">
     var bnoValue = '<c:out value="${board.bno}"/>';//게시글 번호를 받아와 전역변수에 저장합니다.
-    console.log("선택된 게시글 번호 :" + bnoValue);
+    // console.log("선택된 게시글 번호 :" + bnoValue);
 
     //댓글 추가 테스트
     /* replyService.add(
@@ -180,14 +180,14 @@ $(document).ready(function () {
     var operForm = $("#operForm");
 
     $("button[data-oper='modify']").on("click", function () {
-        console.log("bno = " + '<c:out value="${board.bno}"/>');
-        console.log("pageNum = " + '<c:out value="${cri.pageNum}"/>');
-        console.log("amount = " + '<c:out value="${cri.amount}"/>');
-        console.log("keyword = " + '<c:out value="${cri.keyword}"/>');
-        console.log("type = " + '<c:out value="${cri.type}"/>');
+        <%--console.log("bno = " + '<c:out value="${board.bno}"/>');--%>
+        <%--console.log("pageNum = " + '<c:out value="${cri.pageNum}"/>');--%>
+        <%--console.log("amount = " + '<c:out value="${cri.amount}"/>');--%>
+        <%--console.log("keyword = " + '<c:out value="${cri.keyword}"/>');--%>
+        <%--console.log("type = " + '<c:out value="${cri.type}"/>');--%>
         /*var url = "/board/modify?bno="+$("#bno").val();
         operForm.attr("action",url); //case 1*/
-        console.log(operForm.attr("action"));
+        // console.log(operForm.attr("action"));
         operForm.submit();
     });//button modify click
 
@@ -215,7 +215,7 @@ $(document).ready(function () {
             for (var i = 0, len = list.length || 0; i < len; i++) {
                 var timeValue = list[i].replyDate;
 
-                console.log("댓글 시간 "+timeValue+" 입니다");
+                // console.log("댓글 시간 "+timeValue+" 입니다");
 
                 str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
                 str += "<div><div class='header'><strong class='primary-font'>" + list[i].replyer + "</strong>";
@@ -263,8 +263,53 @@ $(document).ready(function () {
             modal.modal("hide");
             showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
         })//replyService.add fn
-
     });//modalRegister click fn
+
+
+    $(".chat").on("click","li", function () { //이벤트의 위임 ul > li
+        var rno = $(this).data("rno");
+        // console.log(rno);
+
+        replyService.get(rno, function (reply) {
+            modalInputReply.val(reply.reply);
+            modalInputReplyer.val(reply.replyer);
+            modalInputReplyDate.val(replyService.timeFormat8601(reply.replyDate)).attr("readonly", "readonly");
+            modal.data("rno", reply.rno);
+
+            modal.find("button[id!='modalCloseBtn']").hide();
+            modalModBtn.show();
+            modalRemoveBtn.show();
+
+            $(".modal").modal("show");
+        })//replyService.get
+    })//.chat click fn
+
+
+    modalModBtn.on("click", function (e) {
+        var reply = {
+            rno:modal.data("rno"),
+            reply:modalInputReply.val(),
+            replyer:modalInputReplyer.val()
+        };//reply declaration
+
+        replyService.update(reply, function (result) {
+            console.log(reply);
+            alert(result);//수정 결과 success 출력
+            modal.modal("hide");
+            showList(1);//댓글 리스트 재출력
+        });
+    });//modalModBtn click fn
+
+
+    modalRemoveBtn.on("click", function (e) {
+        var rno = modal.data("rno");
+
+        replyService.remove(rno, function (result) {
+            alert(result);
+            modal.modal("hide");
+            showList(1);
+        });//replyService.remove
+    });//modalRemoveBtn click fn
 });//document.ready
 </script>
 <%@ include file="../includes/footer.jsp" %>
