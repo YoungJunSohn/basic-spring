@@ -1,4 +1,4 @@
-console.log("댓글 모듈입니다....");
+// console.log("댓글 모듈입니다....");
 
 var replyService = (function () {
 /*
@@ -58,8 +58,8 @@ var replyService = (function () {
     }//func remove
 
     function update(reply, callback, error) {
-        console.log("reply.js //수정할 댓글 정보 아래에 출력 ");
-        console.log(reply);
+        // console.log("reply.js //수정할 댓글 정보 아래에 출력 ");
+        // console.log(reply);
 
         $.ajax({
             type:'put',
@@ -91,11 +91,40 @@ var replyService = (function () {
         })//$get.fail
     }//get
 
-    return {
-        add:add,//add 함수 호출,
-        getList:getList,//getJson 함수 호출
+
+    //날짜 포맷 UTC -> ISO 8601
+    function timeFormat8601(timeValue) {
+        var today = new Date();
+        var gap = today.getTime() - timeValue;
+        var dateObj = new Date(timeValue);
+        var str = ""; //선언된 변수는 get.jsp에서 사용됩니다.
+
+        if(gap < (1000 * 60 * 60 * 24)){
+            var hour = dateObj.getHours();
+            var min = dateObj.getMinutes();
+            var sec = dateObj.getSeconds();
+
+            return [(hour > 9 ? '' : '0') + hour, ':',
+                (min > 9 ? '':'0') + min, ":",
+                (sec > 9 ? '':'0') + sec].join("");
+        }else{
+            var year = dateObj.getFullYear();
+            var month = dateObj.getMonth() + 1; //getMonth는 기본값이 0이므로 1을 더합니다.
+            var day = dateObj.getDate();
+            return [year,'/',
+                (month > 9 ? '':'0') + month, '/',
+                (day > 9 ? '' : '0') + day ].join('');
+        }//if~else
+    }//timeFormat8601
+
+
+    return {//전자(get.jsp에서 호출되는 함수 이름) : 후자(JSON 으로 리턴 될 함수 이름)
+        add:add,
+        getList:getList,
         remove:remove,
         update:update,
-        get:get
-    };
-})();
+        get:get,
+        timeFormat8601:timeFormat8601
+    };//return
+    
+})();//자체실행함수
