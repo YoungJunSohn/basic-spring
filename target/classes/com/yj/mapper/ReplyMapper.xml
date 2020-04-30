@@ -27,7 +27,7 @@
         WHERE rno = #{rno}
     </update>
 
-    <select id="getListWithPaging" resultType="com.yj.domain.ReplyVO">
+    <select id="getList" resultType="com.yj.domain.ReplyVO">
         SELECT rno, bno, reply, replyer, replyDate, updateDate
         FROM tbl_reply
         WHERE bno = #{bno}
@@ -38,8 +38,8 @@
         <![CDATA[
                 SELECT   rno, bno, reply, replyer, replydate, updatedate
                 FROM(
-                    SELECT /*+ INDEX(tbl_reply idx_reply)*/
-                        rownum rn, rno, bno, reply, replyer, replyDate, updatedate
+                    SELECT /*+INDEX(tbl_reply idx_reply)*/
+                        rownum rn, rno, bno, reply, replyer, replydate, updatedate
                     FROM tbl_reply
                     WHERE bno=#{bno}
                     and rno > 0

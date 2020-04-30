@@ -24,12 +24,21 @@ public class ReplyMapperTests {
 
 
     @Test
+    public void getListWithPaging(){
+        Criteria cri = new Criteria(1, 5);
+        List<ReplyVO> replies = mapper.getListWithPaging(cri, 8126610L);
+        replies.forEach(reply->log.info(reply));
+    }//getListWithPaging
+
+
+
+    /*@Test
     public void testListWithPaging(){
         Criteria cri = new Criteria();
         List<ReplyVO> replies = mapper.getListWithPaging(cri,bnoArr[0]);
         replies.forEach(reply -> log.info(reply));
 
-    }//testListWithPaging()
+    }//testListWithPaging()*/
 
     @Test
     public void testUpdate(){
@@ -76,10 +85,5 @@ public class ReplyMapperTests {
     }//testMapper()
 
 
-    @Test
-    public void getListWithPaging(){
-        Criteria cri = new Criteria();
-        List<ReplyVO> replies = mapper.getListWithPaging(cri, 8126610L);
-        replies.forEach(reply->log.info(reply));
-    }//getListWithPaging
+
 }//ReplyMapperTests

@@ -43,6 +43,12 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public List<ReplyVO> getList(Criteria cri, Long bno) {
         log.info(bno+"번 글의 댓글 목록을 출력합니다.");
-        return mapper.getListWithPaging(cri, bno);
+        return mapper.getList(cri, bno);
     }//getList
+
+    @Override
+    public List<ReplyVO> getListWithPaging(Criteria cri, Long bno) {
+        log.info(bno+"번 글의 댓글 목록을 출력합니다.");
+        return mapper.getListWithPaging(cri, bno);
+    }
 }//ReplyServiceImpl

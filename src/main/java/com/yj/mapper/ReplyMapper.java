@@ -13,8 +13,13 @@ public interface ReplyMapper {
     public int delete(Long rno);
     public int update(ReplyVO reply);
 
+    public List<ReplyVO> getList(
+            @Param("cri")Criteria cri,
+            @Param("bno")Long bno
+            );//getList
+
     public List<ReplyVO> getListWithPaging(
             @Param("cri")Criteria cri,
             @Param("bno")Long bno
-            );//getListWithPaging
+    );//getListWithPaging
 }//ReplyMapper
