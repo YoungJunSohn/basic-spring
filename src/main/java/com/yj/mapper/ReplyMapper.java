@@ -22,4 +22,6 @@ public interface ReplyMapper {
             @Param("cri")Criteria cri,
             @Param("bno")Long bno
     );//getListWithPaging
+
+    public int getCountByBno(Long bno);
 }//ReplyMapper
