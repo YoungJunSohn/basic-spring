@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel-default panel">
-            <div class="panel-heading"> ~~Read~~ </div><!-- /.panel-heading -->
+            <div class="panel-heading"> ~~Read~~</div><!-- /.panel-heading -->
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -78,6 +78,10 @@
                     <%--댓글 끝--%>
                 </ul>
             </div><!--/.panel-body-->
+
+            <div class="panel-footer">
+
+            </div><!--/.panel-footer-->
         </div><!--/.panel panel-default-->
     </div><!--/.col-lg-12-->
 </div>
@@ -204,7 +208,22 @@ $(document).ready(function () {
     showList(1);
 
     function showList(page) {
-        replyService.getList({bno: bnoValue, page: page || 1}, function (list) {
+        replyService.getList({bno: bnoValue, page: page || 1}, function (replyCnt, list) {
+
+            console.log("/*reply.js*/ replyCnt : " + replyCnt);
+            console.log("/*reply.js*/ list : " + list);
+
+            if (page == -1) {
+                pageNum = Math.ceil(replyCnt / 5.0);
+                showList(pageNum);//페이지 번호가 -1로 전달되면 마지막 페이지를 찾아서 다시 호출하게 됨
+                return;
+            }//if
+            //여러번 서버를 호출하게 되지만 괜찮을까??
+            /*
+            * 댓글을 작성하는 것이 댓글 조회나 댓글 페이징처리에 비해서 적은 횟수로 이루어지기 때문에 괜찮다!
+            * */
+
+
             var str = "";
 
             if (list == null || list.length == 0) {
@@ -252,8 +271,8 @@ $(document).ready(function () {
 
     modalRegisterBtn.on("click", function () {
         var reply = {
-            reply:modalInputReply.val(),
-            replyer:modalInputReplyer.val(),
+            reply: modalInputReply.val(),
+            replyer: modalInputReplyer.val(),
             bno: bnoValue
         };//reply
 
@@ -261,12 +280,13 @@ $(document).ready(function () {
             alert(result);
             modal.find("input").val();//입력한 정보가 replyService로 넘어감
             modal.modal("hide");
-            showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
+            //showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
+            showList(-1);//페이지 번호를 -1로 전달하여 showList(page) 함수가 작동하게 하고, 전체 댓글 숫자를 파악함
         })//replyService.add fn
     });//modalRegister click fn
 
 
-    $(".chat").on("click","li", function () { //이벤트의 위임 ul > li
+    $(".chat").on("click", "li", function () { //이벤트의 위임 ul > li
         var rno = $(this).data("rno");
         // console.log(rno);
 
@@ -287,9 +307,9 @@ $(document).ready(function () {
 
     modalModBtn.on("click", function (e) {
         var reply = {
-            rno:modal.data("rno"),
-            reply:modalInputReply.val(),
-            replyer:modalInputReplyer.val()
+            rno: modal.data("rno"),
+            reply: modalInputReply.val(),
+            replyer: modalInputReplyer.val()
         };//reply declaration
 
         replyService.update(reply, function (result) {
