@@ -80,7 +80,7 @@
             </div><!--/.panel-body-->
 
             <div class="panel-footer">
-
+<!--여기부터-->
             </div><!--/.panel-footer-->
         </div><!--/.panel panel-default-->
     </div><!--/.col-lg-12-->
@@ -131,6 +131,52 @@
 <%--****************************  scrpit  *****************************--%>
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
 <script type="text/javascript">
+    var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
+
+    function showReplyPage(replyCnt) {
+        var endNum = Math.ceil(pageNum / 5.0) * 5;
+        var startNum = endNum - 4;
+
+        var prev = startNum != 1;
+        var next = false;
+
+        if(endNum * 5 >= replyCnt){
+            endNum = Math.ceil(replyCnt/5.0);
+        }//if
+
+        if(endNum * 5 < replyCnt){
+            next = true;
+        }//if
+
+        var str = "<ul class='pagination pull-right'>";
+
+        if(prev){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(startNum -1 )+"'> 이전으로 </a></li>"
+
+            for(var i = startNum; i <= endNum ; i++){
+                var active = pageNum == i ? "active" : "" ;
+
+                str += "<li class='page-item "+active+" '>" +
+                    "<a class='page-link' href='"+i+"'> "+i+" </a></li>"
+            }//for
+        }//if(prev)
+
+        if(next){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(endNum+1)+"'> 다음으로 </a></li>";
+        }//if(next)
+
+        str +="</ul>";
+
+        console.log(str);
+
+        replyPageFooter.html(str);
+
+    };// fn showReplyPage()
+
+
     var bnoValue = '<c:out value="${board.bno}"/>';//게시글 번호를 받아와 전역변수에 저장합니다.
     // console.log("선택된 게시글 번호 :" + bnoValue);
 
@@ -247,6 +293,8 @@ $(document).ready(function () {
             }//for
 
             replyUL.html(str);
+
+            showReplyPage(replyCnt);
         })//reply getList
     }//fn showList
 
