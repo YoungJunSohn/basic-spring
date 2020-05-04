@@ -131,50 +131,7 @@
 <%--****************************  scrpit  *****************************--%>
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
 <script type="text/javascript">
-    var pageNum = 1;
-    var replyPageFooter = $(".panel-footer");
 
-    function showReplyPage(replyCnt) {
-        var endNum = Math.ceil(pageNum / 5.0) * 5;
-        var startNum = endNum - 4;
-
-        var prev = startNum != 1;
-        var next = false;
-
-        if(endNum * 5 >= replyCnt){
-            endNum = Math.ceil(replyCnt/5.0);
-        }//if
-
-        if(endNum * 5 < replyCnt){
-            next = true;
-        }//if
-
-        var str = "<ul class='pagination pull-right'>";
-
-        if(prev){
-            str += "<li class='page-item'>" +
-                "<a class='page-link' href='"+(startNum -1 )+"'> 이전으로 </a></li>"
-
-            for(var i = startNum; i <= endNum ; i++){
-                var active = pageNum == i ? "active" : "" ;
-
-                str += "<li class='page-item "+active+" '>" +
-                    "<a class='page-link' href='"+i+"'> "+i+" </a></li>"
-            }//for
-        }//if(prev)
-
-        if(next){
-            str += "<li class='page-item'>" +
-                "<a class='page-link' href='"+(endNum+1)+"'> 다음으로 </a></li>";
-        }//if(next)
-
-        str +="</ul>";
-
-        console.log(str);
-
-        replyPageFooter.html(str);
-
-    };// fn showReplyPage()
 
 
     var bnoValue = '<c:out value="${board.bno}"/>';//게시글 번호를 받아와 전역변수에 저장합니다.
@@ -256,11 +213,11 @@ $(document).ready(function () {
     function showList(page) {
         replyService.getList({bno: bnoValue, page: page || 1}, function (replyCnt, list) {
 
-            console.log("/*reply.js*/ replyCnt : " + replyCnt);
-            console.log("/*reply.js*/ list : " + list);
+            // console.log("/*reply.js*/ replyCnt : " + replyCnt);
+            // console.log("/*reply.js*/ list : " + list);
 
             if (page == -1) {
-                pageNum = Math.ceil(replyCnt / 5.0);
+                pageNum = Math.ceil(replyCnt / 5.0); //한 페이지에 5개 출력
                 showList(pageNum);//페이지 번호가 -1로 전달되면 마지막 페이지를 찾아서 다시 호출하게 됨
                 return;
             }//if
@@ -361,7 +318,7 @@ $(document).ready(function () {
         };//reply declaration
 
         replyService.update(reply, function (result) {
-            console.log(reply);
+            // console.log(reply);
             alert(result);//수정 결과 success 출력
             modal.modal("hide");
             showList(1);//댓글 리스트 재출력
@@ -378,6 +335,100 @@ $(document).ready(function () {
             showList(1);
         });//replyService.remove
     });//modalRemoveBtn click fn
+
+
+
+
+
+
+
+
+    function showReplyPage(replyCnt) {
+        var endNum = Math.ceil(pageNum / 5.0) * 5;
+        var startNum = endNum - 4 ;
+
+        // console.log("끝번호 :"+endNum+" 시작번호(끝번호-4) :" +startNum); //제대로 출력됨
+
+        var prev = startNum != 1;
+        var next = false;
+
+        if(endNum * 5 >= replyCnt){
+            endNum = Math.ceil(replyCnt/5.0);
+        }//if
+
+        if(endNum * 5 < replyCnt){
+            next = true;
+        }//if
+
+        var str = "<ul class='pagination pull-right'>";
+
+        if(prev){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(startNum -1 )+"'> 이전으로 </a></li>"
+        }//if(prev)
+
+        for(var i = startNum; i <= endNum ; i++){
+            var active = pageNum == i ? "active" : "" ;
+
+            str += "<li class='page-item "+active+" '>" +
+                "<a class='page-link' href='"+i+"'> "+i+" </a></li>"
+        }//for
+
+        if(next){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(endNum+1)+"'> 다음으로 </a></li>";
+        }//if(next)
+
+        str +="</ul>";
+
+        // console.log(str);
+
+        replyPageFooter.html(str);
+
+    };// fn showReplyPage()
+
+
+    var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
+
+
+
+    replyPageFooter.on("click", "li a" ,  function (e) {
+        e.preventDefault();
+
+        // console.log("클릭됨!");
+
+        var targetPageNum = $(this).attr("href");
+
+        // console.log( "클릭된 a링크의 href 값은 : "+targetPageNum); //a링크 href 값에는 페이지 번호가 있음
+        pageNum = targetPageNum;
+        showList(pageNum); // 해당 페이지로 리스트 출력
+    });//replyPageFooter click fn 클릭이벤트 li로 상속
+
+
+    modalModBtn.on("click", function (e) {
+        var reply = {
+            rno : modal.data("rno"),
+            reply : modalInputReply.val()
+        }//var reply
+
+        replyService.update(reply, function(result){
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum); //수정 후 현재 보고있는 페이지를 호출한다.
+        })//update() 댓글 수정
+    });//modalModBtn click fn
+
+    modalRemoveBtn.on("click", function (e) {
+        var rno = modal.data("rno");
+
+        replyService.remove(rno, function(result){
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum);
+        })//remove 댓글 삭제
+    });
+
 });//document.ready
 </script>
 <%@ include file="../includes/footer.jsp" %>
