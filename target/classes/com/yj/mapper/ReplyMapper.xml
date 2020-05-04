@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yj.mapper.ReplyMapper">
 
-    <insert id="insert" >
+    <insert id="insert">
         INSERT INTO tbl_reply (rno, bno, reply, replyer)
         VALUES (seq_reply.nextval, #{bno},#{reply},#{replyer})
     </insert>
@@ -14,7 +14,7 @@
         FROM tbl_reply
         WHERE rno = #{rno}
     </select>
-    
+
     <delete id="delete" parameterType="Long">
         DELETE
         from tbl_reply
@@ -27,10 +27,33 @@
         WHERE rno = #{rno}
     </update>
 
-    <select id="getListWithPaging" resultType="com.yj.domain.ReplyVO">
+    <select id="getList" resultType="com.yj.domain.ReplyVO">
         SELECT rno, bno, reply, replyer, replyDate, updateDate
         FROM tbl_reply
         WHERE bno = #{bno}
         ORDER BY rno asc
+    </select>
+
+    <select id="getListWithPaging" resultType="com.yj.domain.ReplyVO">
+        <![CDATA[
+                SELECT   rno, bno, reply, replyer, replydate, updatedate
+                FROM(
+                    SELECT /*+INDEX(tbl_reply idx_reply)*/
+                        rownum rn, rno, bno, reply, replyer, replydate, updatedate
+                    FROM tbl_reply
+                    WHERE bno=#{bno}
+                    and rno > 0
+                    and rownum <= #{cri.pageNum} * #{cri.amount}
+                    )
+                WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+        ]]>
+    </select>
+
+    <select id="getCountByBno" resultType="int">
+        <![CDATA[
+        SELECT count(rno)
+        FROM tbl_reply
+        WHERE bno= #{bno}
+]]>
     </select>
 </mapper>

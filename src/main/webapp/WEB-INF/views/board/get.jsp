@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel-default panel">
-            <div class="panel-heading"> ~~Read~~ </div><!-- /.panel-heading -->
+            <div class="panel-heading"> ~~Read~~</div><!-- /.panel-heading -->
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -78,6 +78,10 @@
                     <%--댓글 끝--%>
                 </ul>
             </div><!--/.panel-body-->
+
+            <div class="panel-footer">
+<!--여기부터-->
+            </div><!--/.panel-footer-->
         </div><!--/.panel panel-default-->
     </div><!--/.col-lg-12-->
 </div>
@@ -127,6 +131,9 @@
 <%--****************************  scrpit  *****************************--%>
 <script type="text/javascript" src="/resources/js/reply.js"></script><%--댓글 모듈--%>
 <script type="text/javascript">
+
+
+
     var bnoValue = '<c:out value="${board.bno}"/>';//게시글 번호를 받아와 전역변수에 저장합니다.
     // console.log("선택된 게시글 번호 :" + bnoValue);
 
@@ -204,7 +211,22 @@ $(document).ready(function () {
     showList(1);
 
     function showList(page) {
-        replyService.getList({bno: bnoValue, page: page || 1}, function (list) {
+        replyService.getList({bno: bnoValue, page: page || 1}, function (replyCnt, list) {
+
+            // console.log("/*reply.js*/ replyCnt : " + replyCnt);
+            // console.log("/*reply.js*/ list : " + list);
+
+            if (page == -1) {
+                pageNum = Math.ceil(replyCnt / 5.0); //한 페이지에 5개 출력
+                showList(pageNum);//페이지 번호가 -1로 전달되면 마지막 페이지를 찾아서 다시 호출하게 됨
+                return;
+            }//if
+            //여러번 서버를 호출하게 되지만 괜찮을까??
+            /*
+            * 댓글을 작성하는 것이 댓글 조회나 댓글 페이징처리에 비해서 적은 횟수로 이루어지기 때문에 괜찮다!
+            * */
+
+
             var str = "";
 
             if (list == null || list.length == 0) {
@@ -228,6 +250,8 @@ $(document).ready(function () {
             }//for
 
             replyUL.html(str);
+
+            showReplyPage(replyCnt);
         })//reply getList
     }//fn showList
 
@@ -252,8 +276,8 @@ $(document).ready(function () {
 
     modalRegisterBtn.on("click", function () {
         var reply = {
-            reply:modalInputReply.val(),
-            replyer:modalInputReplyer.val(),
+            reply: modalInputReply.val(),
+            replyer: modalInputReplyer.val(),
             bno: bnoValue
         };//reply
 
@@ -261,12 +285,13 @@ $(document).ready(function () {
             alert(result);
             modal.find("input").val();//입력한 정보가 replyService로 넘어감
             modal.modal("hide");
-            showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
+            //showList(1);//댓글 추가, 완료시 목록 갱신이 필요함
+            showList(-1);//페이지 번호를 -1로 전달하여 showList(page) 함수가 작동하게 하고, 전체 댓글 숫자를 파악함
         })//replyService.add fn
     });//modalRegister click fn
 
 
-    $(".chat").on("click","li", function () { //이벤트의 위임 ul > li
+    $(".chat").on("click", "li", function () { //이벤트의 위임 ul > li
         var rno = $(this).data("rno");
         // console.log(rno);
 
@@ -287,13 +312,13 @@ $(document).ready(function () {
 
     modalModBtn.on("click", function (e) {
         var reply = {
-            rno:modal.data("rno"),
-            reply:modalInputReply.val(),
-            replyer:modalInputReplyer.val()
+            rno: modal.data("rno"),
+            reply: modalInputReply.val(),
+            replyer: modalInputReplyer.val()
         };//reply declaration
 
         replyService.update(reply, function (result) {
-            console.log(reply);
+            // console.log(reply);
             alert(result);//수정 결과 success 출력
             modal.modal("hide");
             showList(1);//댓글 리스트 재출력
@@ -310,6 +335,100 @@ $(document).ready(function () {
             showList(1);
         });//replyService.remove
     });//modalRemoveBtn click fn
+
+
+
+
+
+
+
+
+    function showReplyPage(replyCnt) {
+        var endNum = Math.ceil(pageNum / 5.0) * 5;
+        var startNum = endNum - 4 ;
+
+        // console.log("끝번호 :"+endNum+" 시작번호(끝번호-4) :" +startNum); //제대로 출력됨
+
+        var prev = startNum != 1;
+        var next = false;
+
+        if(endNum * 5 >= replyCnt){
+            endNum = Math.ceil(replyCnt/5.0);
+        }//if
+
+        if(endNum * 5 < replyCnt){
+            next = true;
+        }//if
+
+        var str = "<ul class='pagination pull-right'>";
+
+        if(prev){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(startNum -1 )+"'> 이전으로 </a></li>"
+        }//if(prev)
+
+        for(var i = startNum; i <= endNum ; i++){
+            var active = pageNum == i ? "active" : "" ;
+
+            str += "<li class='page-item "+active+" '>" +
+                "<a class='page-link' href='"+i+"'> "+i+" </a></li>"
+        }//for
+
+        if(next){
+            str += "<li class='page-item'>" +
+                "<a class='page-link' href='"+(endNum+1)+"'> 다음으로 </a></li>";
+        }//if(next)
+
+        str +="</ul>";
+
+        // console.log(str);
+
+        replyPageFooter.html(str);
+
+    };// fn showReplyPage()
+
+
+    var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
+
+
+
+    replyPageFooter.on("click", "li a" ,  function (e) {
+        e.preventDefault();
+
+        // console.log("클릭됨!");
+
+        var targetPageNum = $(this).attr("href");
+
+        // console.log( "클릭된 a링크의 href 값은 : "+targetPageNum); //a링크 href 값에는 페이지 번호가 있음
+        pageNum = targetPageNum;
+        showList(pageNum); // 해당 페이지로 리스트 출력
+    });//replyPageFooter click fn 클릭이벤트 li로 상속
+
+
+    modalModBtn.on("click", function (e) {
+        var reply = {
+            rno : modal.data("rno"),
+            reply : modalInputReply.val()
+        }//var reply
+
+        replyService.update(reply, function(result){
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum); //수정 후 현재 보고있는 페이지를 호출한다.
+        })//update() 댓글 수정
+    });//modalModBtn click fn
+
+    modalRemoveBtn.on("click", function (e) {
+        var rno = modal.data("rno");
+
+        replyService.remove(rno, function(result){
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum);
+        })//remove 댓글 삭제
+    });
+
 });//document.ready
 </script>
 <%@ include file="../includes/footer.jsp" %>
