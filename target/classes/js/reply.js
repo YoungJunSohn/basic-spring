@@ -5,7 +5,7 @@ var replyService = (function () {
     console.log("모듈내 즉시실행 함수에 접근하였습니다..");
 */
     function add(reply, callback, error) {
-        console.log("add 함수에 접근하였습니다.")
+        // console.log("add 함수에 접근하였습니다.")
         $.ajax({
             type:'post',
             url: '/replies/new',
@@ -30,7 +30,8 @@ var replyService = (function () {
 
         $.getJSON("/replies/pages/"+bno+"/"+page+".json", function (data) {
             if (callback){
-                callback(data);
+                //callback(data) : 댓글 목록만 가져오는 경우
+                callback(data.replyCnt, data.list);// 댓글 숫자와 목록을 가져오는 경우
             }//if
         }).fail(function (xht, status, err) {
             if (error){

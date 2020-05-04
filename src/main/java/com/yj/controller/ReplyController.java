@@ -2,6 +2,7 @@ package com.yj.controller;
 
 import com.sun.istack.internal.NotNull;
 import com.yj.domain.Criteria;
+import com.yj.domain.ReplyPageDTO;
 import com.yj.domain.ReplyVO;
 import com.yj.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 public class ReplyController {
     private ReplyService service;
 
+
+
     //댓글 등록 : 브라우저에는 json 타입의 댓글 데이터를 전송하고, 서버에서는 문자열 처리결과 출력
     @PostMapping(value = "/new",
             consumes = "application/json",//데이터 처리정보
@@ -35,9 +38,7 @@ public class ReplyController {
             log.info("댓글 입력이 실패하였습니다.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }//if~else
-    }
-
-    ;//create()
+    };//create()
 
 
     @GetMapping(value = "/pages/{bno}/{page}",
@@ -45,13 +46,13 @@ public class ReplyController {
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_JSON_VALUE
             })
-    public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") Long bno,
+    public ResponseEntity<ReplyPageDTO> getList(@PathVariable("bno") Long bno,
                                                  @PathVariable("page") int page) {
         log.info("리스트 페이지입니다.");
-        Criteria cri = new Criteria(page, 10);
+        Criteria cri = new Criteria(page, 5);
         log.info("cri 객체 : " + cri);
 
-        return new ResponseEntity<>(service.getList(cri, bno), HttpStatus.OK);
+        return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
     }//getList()
 
 
@@ -87,10 +88,10 @@ public class ReplyController {
     public ResponseEntity<String> modify(@PathVariable("rno") Long rno,
                                          @RequestBody ReplyVO vo) {
         vo.setRno(rno);
-        log.info(rno+"번 댓글 수정을 준비중입니다.");
-        log.info("수정할 댓글 정보 : "+vo);
-        return service.modify(vo)==1
-                ? new ResponseEntity<>("success",HttpStatus.OK)
+        log.info(rno + "번 댓글 수정을 준비중입니다.");
+        log.info("수정할 댓글 정보 : " + vo);
+        return service.modify(vo) == 1
+                ? new ResponseEntity<>("success", HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }//modify()
 }//ReplyController
