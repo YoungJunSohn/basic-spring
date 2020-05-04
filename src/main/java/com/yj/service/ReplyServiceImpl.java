@@ -1,6 +1,7 @@
 package com.yj.service;
 
 import com.yj.domain.Criteria;
+import com.yj.domain.ReplyPageDTO;
 import com.yj.domain.ReplyVO;
 import com.yj.mapper.ReplyMapper;
 import lombok.Setter;
@@ -43,6 +44,21 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public List<ReplyVO> getList(Criteria cri, Long bno) {
         log.info(bno+"번 글의 댓글 목록을 출력합니다.");
-        return mapper.getListWithPaging(cri, bno);
+        return mapper.getList(cri, bno);
     }//getList
+
+    @Override
+    public List<ReplyVO> getListWithPaging(Criteria cri, Long bno) {
+        log.info(bno+"번 글의 댓글 목록을 출력합니다.");
+        return mapper.getListWithPaging(cri, bno);
+    }//getListWithPaging
+
+    @Override
+    public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+        log.info(bno+"번 댓글 목록을 페이징 처리하여 출력합니다.");
+        return new ReplyPageDTO(
+                mapper.getCountByBno(bno),
+                mapper.getListWithPaging(cri, bno)
+        );
+    }//getListPage
 }//ReplyServiceImpl
